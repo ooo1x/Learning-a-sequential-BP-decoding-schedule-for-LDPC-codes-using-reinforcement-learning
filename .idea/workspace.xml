@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33c695ea-78e1-44dd-a406-597587e33eb0" name="Changes" comment="BPSK transmission system">
-      <change afterPath="$PROJECT_DIR$/.idea/FA.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BPSK.py" afterDir="false" />
+    <list default="true" id="33c695ea-78e1-44dd-a406-597587e33eb0" name="Changes" comment="BPSK_with_function">
+      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/FA.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FA.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BPSK.py" beforeDir="false" afterPath="$PROJECT_DIR$/BPSK.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BPSK_upgrade.py" beforeDir="false" afterPath="$PROJECT_DIR$/BPSK_upgrade.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +27,20 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ooo1x&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ooo1x/FA.git&quot;,
+    &quot;accountId&quot;: &quot;5a2a79de-e9a5-40b8-a042-8799f4af9d63&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -41,18 +53,37 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.BPSK.executor": "Run",
+    "Python.BPSK_upgrade.executor": "Run",
+    "Python.algorithm.executor": "Run",
+    "Python.channel_models.executor": "Run",
+    "Python.example_propagation.executor": "Run",
+    "Python.graph.executor": "Run",
+    "Python.graph_example.executor": "Run",
+    "Python.node.executor": "Run",
+    "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
+    "WebServerToolWindowPanel.toolwindow.show.date": "false",
+    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
+    "WebServerToolWindowPanel.toolwindow.show.size": "false",
     "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/91931/PycharmProjects/researchproject/belief_propagation-main/belief_propagation",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\91931\PycharmProjects\researchproject\belief_propagation-main\belief_propagation" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -71,7 +102,27 @@
       <updated>1713531262415</updated>
       <workItem from="1713531263542" duration="513000" />
       <workItem from="1713533321417" duration="4309000" />
+      <workItem from="1714753311738" duration="902000" />
+      <workItem from="1714754231350" duration="450000" />
+      <workItem from="1714754691969" duration="2751000" />
+      <workItem from="1714759918878" duration="2246000" />
+      <workItem from="1714765569903" duration="213000" />
+      <workItem from="1714765790830" duration="726000" />
+      <workItem from="1714766633425" duration="925000" />
+      <workItem from="1715179048617" duration="372000" />
+      <workItem from="1715279256757" duration="2512000" />
+      <workItem from="1715281812773" duration="3801000" />
+      <workItem from="1715285666385" duration="2576000" />
     </task>
+    <task id="LOCAL-00001" summary="BPSK_with_function">
+      <option name="closed" value="true" />
+      <created>1714766947474</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714766947474</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -90,9 +141,20 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="BPSK transmission system" />
-    <option name="LAST_COMMIT_MESSAGE" value="BPSK transmission system" />
+    <MESSAGE value="BPSK_with_function" />
+    <option name="LAST_COMMIT_MESSAGE" value="BPSK_with_function" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/FA$BPSK.coverage" NAME="BPSK Coverage Results" MODIFIED="1713537630995" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/researchproject$algorithm.coverage" NAME="algorithm Coverage Results" MODIFIED="1715286604737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$graph_example.coverage" NAME="graph_example Coverage Results" MODIFIED="1715287124163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$BPSK_upgrade.coverage" NAME="BPSK_upgrade Coverage Results" MODIFIED="1715286567258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/researchproject$test.coverage" NAME="test Coverage Results" MODIFIED="1715286892696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/examples" />
+    <SUITE FILE_PATH="coverage/researchproject$example_propagation.coverage" NAME="example_propagation Coverage Results" MODIFIED="1715287953353" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/FA$test.coverage" NAME="test Coverage Results" MODIFIED="1714751133171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/FA$BPSK.coverage" NAME="BPSK Coverage Results" MODIFIED="1714766022978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/researchproject$channel_models.coverage" NAME="channel_models Coverage Results" MODIFIED="1715280710357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$node.coverage" NAME="node Coverage Results" MODIFIED="1715285755624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$BPSK.coverage" NAME="BPSK Coverage Results" MODIFIED="1714766901901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/researchproject$graph.coverage" NAME="graph Coverage Results" MODIFIED="1715280847471" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
   </component>
 </project>

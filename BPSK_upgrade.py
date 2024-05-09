@@ -3,12 +3,6 @@ import matplotlib.pyplot as plt
 import scipy.signal as signal
 from math import pi, floor
 
-# Parameters
-size = 20  # Number of symbols
-sampling_t = 0.01  # Sampling interval
-fc = 4000  # Carrier frequency
-fs = 40 * fc  # Sampling frequency
-
 def generate_binary_signal(size, t):
     a = np.random.randint(0, 2, size)
     m = np.zeros(len(t), dtype=np.float32)
@@ -44,7 +38,12 @@ def detect_signal(lowpass_out, size):
         detection_bpsk[i * 100: (i + 1) * 100] = flag[i]
     return detection_bpsk
 
-# Main script
+# Parameters
+size = 20  # Number of symbols
+sampling_t = 0.01  # Sampling interval
+fc = 4000  # Carrier frequency
+fs = 40 * fc  # Sampling frequency
+
 t = np.arange(0, size, sampling_t)
 ts = np.arange(0, (100 * size) / fs, 1 / fs)
 m = generate_binary_signal(size, t)
@@ -52,7 +51,8 @@ bpsk, coherent_carrier = modulate_signal(fc, ts, m)
 noise_bpsk = awgn(bpsk, 5)
 lowpass_out = apply_filters(fs, noise_bpsk, coherent_carrier)
 detection_bpsk = detect_signal(lowpass_out, size)
-# Plot setup
+
+# Plot
 fig, axs = plt.subplots(3, 1, figsize=(10, 15))
 axs[0].plot(t, m)
 axs[0].set_title('Generate N binary bits signal', fontsize=20)
