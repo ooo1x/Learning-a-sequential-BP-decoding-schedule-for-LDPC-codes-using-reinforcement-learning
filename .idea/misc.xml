@@ -4,4 +4,7 @@
     <option name="sdkName" value="Remote Python 3.8.10 (sftp://root@localhost:12345/root/.virtualenvs/pythonProject/bin/python)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.9.19 (sftp://root@localhost:12345/root/.virtualenvs/yixuan/bin/python)" project-jdk-type="Python SDK" />
+  <component name="PythonCompatibilityInspectionAdvertiser">
+    <option name="version" value="3" />
+  </component>
 </project>

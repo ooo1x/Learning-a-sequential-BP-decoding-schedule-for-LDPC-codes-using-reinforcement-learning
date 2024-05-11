@@ -69,10 +69,10 @@ class CNode(Node):
         self.received_messages = {node_uid: 0 for node_uid in self.neighbors}
 
     def message(self, requester_uid: int) -> np.float_:
-        def phi(x):
-            return -np.log(np.tanh(x/2))
-        q = np.array([msg for uid, msg in self.received_messages.items() if uid != requester_uid])
-        return np.prod(np.sign(q))*phi(np.sum(phi(np.absolute(q))))
+        # Collect all messages from neighboring nodes except the requester
+        messages = [self.received_messages[uid] for uid in self.neighbors if uid != requester_uid]
+        product_tanh = np.prod(np.tanh(np.array(messages) / 2))
+        return 2 * np.arctanh(product_tanh)
 
 
 class VNode(Node):

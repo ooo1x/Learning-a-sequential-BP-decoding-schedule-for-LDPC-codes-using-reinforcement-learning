@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.sparse import coo_matrix, save_npz
 
-indices = np.load('belief_propagation-main/belief_propagation/k64_n128_bg2_H_sparse.npy')
+indices = np.load('belief_propagation-main/belief_propagation/k1024_n2048_CCSDS_H_sparse.npy')
 
 row_indices = indices[0]
 col_indices = indices[1]
@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 from scipy.sparse import coo_matrix
 
 
-indices = np.load('belief_propagation-main/belief_propagation/k64_n128_bg2_H_sparse.npy')
+indices = np.load('belief_propagation-main/belief_propagation/k1024_n2048_CCSDS_H_sparse.npy')
 row_indices = indices[0]
 col_indices = indices[1]
 

@@ -22,6 +22,7 @@ class TannerGraph:
         self.v_nodes[node.uid] = node
         return node
 
+
     def add_c_node(self, name: str = "", ordering_key: int = None) -> CNode:
         """
         :param ordering_key: use only for debug purposes
