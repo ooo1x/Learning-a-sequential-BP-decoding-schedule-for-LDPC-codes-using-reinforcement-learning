@@ -1,12 +1,11 @@
 import numpy as np
 from scipy.sparse import coo_matrix
-from scipy.linalg import null_space
 from algorithm import BeliefPropagation
 from graph import TannerGraph
 from channel_models import bsc_llr
 
 # Load the sparse matrix data
-indices = np.load('k1024_n2048_CCSDS_H_sparse.npy')
+indices = np.load('k64_n128_bg2_H_sparse.npy')
 row_indices, col_indices = indices[0], indices[1]
 data = np.ones_like(row_indices)
 num_rows = np.max(row_indices) + 1
