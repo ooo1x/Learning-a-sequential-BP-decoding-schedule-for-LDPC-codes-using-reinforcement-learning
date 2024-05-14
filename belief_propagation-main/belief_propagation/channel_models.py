@@ -11,8 +11,8 @@ def bsc_llr(p: float) -> Callable:
     """
     return lambda y: np.power(-1, y) * np.log((1-p)/p)
 
-def awgn_llr(sigma, received_signal):
-    return 2 * received_signal / (sigma ** 2)
+def awgn_llr(sigma, received_codeword):
+    return 2 * received_codeword / (sigma ** 2)
 
 # Simply add more channel models by writing a function which receives a channel symbol as input and returns an LLL as
 # output

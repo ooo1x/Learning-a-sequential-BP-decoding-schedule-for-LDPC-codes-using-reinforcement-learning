@@ -1,21 +1,33 @@
 from algorithm import BeliefPropagation
 from graph import TannerGraph
-from channel_models import bsc_llr
+from channel_models import awgn_llr
 import numpy as np
 
 H = np.array([[1,1,0,1,1,0,0], [1,0,1,1,0,1,0],[0,1,1,1,0,0,1]])
 
-#Use it to construct a Tanner graph. Assume a BSC channel model with probability p=0.1 for bit flip
-model = bsc_llr(0.1)
-tg = TannerGraph.from_biadjacency_matrix(H, channel_model=model)
+# Define AWGN channel model parameters
+sigma = 0.3
 
-#codeword [1,0,0,0,1,1,0] was sent
-received_codeword = np.array([1,0,0,0,1,1,1])
+# Original codeword: [1, 0, 0, 0, 1, 1, 0]
+original_codeword = np.array([1, 0, 0, 0, 1, 1, 0])
+# BPSK modulation: [1, -1, -1, -1, 1, 1, -1]
+transmitted_codeword = 1 - 2 * original_codeword
 
-# let us try to correct the error
+# Received codeword (with some noise added)
+received_codeword = transmitted_codeword + sigma * np.random.randn(len(transmitted_codeword))
+
+# Compute LLR for received symbols in AWGN channel
+channel_llr = awgn_llr(sigma, received_codeword)
+
+# Create a Tanner graph for the given H matrix and AWGN channel model
+tg = TannerGraph.from_biadjacency_matrix(H, channel_model=lambda x: x)
+
+# Perform decoding
 bp = BeliefPropagation(tg, H, max_iter=10)
-estimate, llr, decode_success = bp.decode(received_codeword)
-error_positions = np.logical_xor(received_codeword, estimate)
-print("Decoded estimate:", estimate)
+estimate, llr, decode_success = bp.decode(channel_llr)
+error_positions = np.logical_xor(original_codeword, estimate)
+print("Sent codeword:", original_codeword)
+print("Received codeword (noisy BPSK symbols):", received_codeword)
+print("Decoded estimate (LLRs):", estimate)
 print("Error positions (True indicates a corrected error):", error_positions)
 print("Decoding successful:", decode_success)

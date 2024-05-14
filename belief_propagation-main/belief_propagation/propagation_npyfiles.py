@@ -2,7 +2,7 @@ import numpy as np
 from scipy.sparse import coo_matrix
 from algorithm import BeliefPropagation
 from graph import TannerGraph
-from channel_models import bsc_llr
+from channel_models import awgn_llr
 
 # Load the sparse matrix data
 indices = np.load('k64_n128_bg2_H_sparse.npy')
@@ -12,29 +12,29 @@ num_rows = np.max(row_indices) + 1
 num_cols = np.max(col_indices) + 1
 H = coo_matrix((data, (row_indices, col_indices)), shape=(num_rows, num_cols)).toarray()
 
-# Construct a Tanner graph
-model = bsc_llr(0.1)
-tg = TannerGraph.from_biadjacency_matrix(H, channel_model=model)
+# Define AWGN channel model parameters
+sigma = 0.3
 
-sent_codeword = np.zeros((num_cols)).astype(int)
-result = sent_codeword.dot(H.T)%2
-if np.all(result == 0):
-    print("Valid sent codeword.")
+# Original codeword: [1, 0, 0, 0, 1, 1, 0]
+original_codeword = np.zeros((num_cols)).astype(int)
+# BPSK modulation: [1, -1, -1, -1, 1, 1, -1]
+transmitted_codeword = 1 - 2 * original_codeword
 
-# Introduce errors
-np.random.seed(42)  # For reproducibility
-error_probability = 0.01
-error_vector = np.random.rand(num_cols) < error_probability
-received_codeword = (sent_codeword + error_vector) % 2
+# Received codeword (with some noise added)
+received_codeword = transmitted_codeword + sigma * np.random.randn(len(transmitted_codeword))
 
-# Initialize the belief propagation decoder
+# Compute LLR for received symbols in AWGN channel
+channel_llr = awgn_llr(sigma, received_codeword)
+
+# Create a Tanner graph for the given H matrix and AWGN channel model
+tg = TannerGraph.from_biadjacency_matrix(H, channel_model=lambda x: x)
+
+# Perform decoding
 bp = BeliefPropagation(tg, H, max_iter=10)
-estimate, llr, decode_success = bp.decode(received_codeword)
-error_positions = np.logical_xor(received_codeword, estimate)
-
-# Output results
-print("Sent codeword:", sent_codeword)
-print("Received codeword:", received_codeword)
-print("Decoded estimate:", estimate)
+estimate, llr, decode_success = bp.decode(channel_llr)
+error_positions = np.logical_xor(original_codeword, estimate)
+print("Sent codeword:", original_codeword)
+print("Received codeword (noisy BPSK symbols):", received_codeword)
+print("Decoded estimate :", estimate)
 print("Error positions (True indicates a corrected error):", error_positions)
 print("Decoding successful:", decode_success)
