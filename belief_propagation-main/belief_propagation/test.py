@@ -2,14 +2,26 @@ from algorithm import BeliefPropagation
 from graph import TannerGraph
 from channel_models import awgn_llr
 import numpy as np
+from scipy.sparse import coo_matrix
 
-H = np.array([[1,1,0,1,1,0,0], [1,0,1,1,0,1,0],[0,1,1,1,0,0,1]])
+def load_sparse_matrix(filepath):
+    indices = np.load(filepath)
+    row_indices, col_indices = indices[0], indices[1]
+    data = np.ones_like(row_indices)
+    num_rows = np.max(row_indices) + 1
+    num_cols = np.max(col_indices) + 1
+    return coo_matrix((data, (row_indices, col_indices)), shape=(num_rows, num_cols)).toarray()
 
-# Define AWGN channel model parameters
-sigma = 0.3
+H = load_sparse_matrix('k64_n128_bg2_H_sparse.npy')
+original_codeword = np.zeros(H.shape[1]).astype(int)
+all_c_nodes_indices = np.arange(H.shape[1], H.shape[1] + H.shape[0])
+sequence = np.random.permutation(all_c_nodes_indices)
 
-# Original codeword: [1, 0, 0, 0, 1, 1, 0]
-original_codeword = np.array([1, 0, 0, 0, 1, 1, 0])
+
+#Define AWGN channel model parameters
+np.random.seed(42)
+sigma = 0.6
+
 # BPSK modulation: [1, -1, -1, -1, 1, 1, -1]
 transmitted_codeword = 1 - 2 * original_codeword
 
@@ -23,7 +35,7 @@ channel_llr = awgn_llr(sigma, received_codeword)
 tg = TannerGraph.from_biadjacency_matrix(H, channel_model=lambda x: x)
 
 # Perform decoding
-bp = BeliefPropagation(tg, H, max_iter=10)
+bp = BeliefPropagation(tg, H, max_iter=10, sequence=sequence)
 estimate, llr, decode_success = bp.decode(channel_llr)
 error_positions = np.logical_xor(original_codeword, estimate)
 print("Sent codeword:", original_codeword)

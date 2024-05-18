@@ -23,12 +23,12 @@ class TannerGraph:
         return node
 
 
-    def add_c_node(self, name: str = "", ordering_key: int = None ) -> CNode:
+    def add_c_node(self, name: str = "", ordering_key: int = None, layer: int = 0) -> CNode:
         """
         :param ordering_key: use only for debug purposes
         :param name: name of node
         """
-        node = CNode(name, ordering_key)
+        node = CNode(name, ordering_key, layer)
         self.c_nodes[node.uid] = node
         return node
 
@@ -97,7 +97,8 @@ class TannerGraph:
         for i in range(n):
             g.add_v_node(name="v" + str(i), channel_model=channel_model, ordering_key=i)
         for j in range(m):
-            g.add_c_node(name="c" + str(j), ordering_key=j)
+            layer = j // 4
+            g.add_c_node(name="c" + str(j), ordering_key=j, layer=layer)
             for i in range(n):
                 if h[j, i] == 1:
                     g.add_edges_by_name({("v" + str(i), "c" + str(j))})

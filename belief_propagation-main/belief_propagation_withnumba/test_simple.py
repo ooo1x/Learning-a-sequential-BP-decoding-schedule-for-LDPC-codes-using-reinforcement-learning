@@ -1,22 +1,16 @@
-import numpy as np
-from scipy.sparse import coo_matrix
 from algorithm import BeliefPropagation
 from graph import TannerGraph
 from channel_models import awgn_llr
+import numpy as np
 
-# Load the sparse matrix data
-indices = np.load('k64_n128_bg2_H_sparse.npy')
-row_indices, col_indices = indices[0], indices[1]
-data = np.ones_like(row_indices)
-num_rows = np.max(row_indices) + 1
-num_cols = np.max(col_indices) + 1
-H = coo_matrix((data, (row_indices, col_indices)), shape=(num_rows, num_cols)).toarray()
+H = np.array([[1,1,0,1,1,0,0], [1,0,1,1,0,1,0],[0,1,1,1,0,0,1]])
 
 # Define AWGN channel model parameters
-sigma = 0.3
+np.random.seed(42)
+sigma = 0.6
 
 # Original codeword: [1, 0, 0, 0, 1, 1, 0]
-original_codeword = np.zeros((num_cols)).astype(int)
+original_codeword = np.array([1, 0, 0, 0, 1, 1, 0])
 # BPSK modulation: [1, -1, -1, -1, 1, 1, -1]
 transmitted_codeword = 1 - 2 * original_codeword
 
@@ -35,6 +29,6 @@ estimate, llr, decode_success = bp.decode(channel_llr)
 error_positions = np.logical_xor(original_codeword, estimate)
 print("Sent codeword:", original_codeword)
 print("Received codeword (noisy BPSK symbols):", received_codeword)
-print("Decoded estimate :", estimate)
+print("Decoded estimate (LLRs):", estimate)
 print("Error positions (True indicates a corrected error):", error_positions)
 print("Decoding successful:", decode_success)

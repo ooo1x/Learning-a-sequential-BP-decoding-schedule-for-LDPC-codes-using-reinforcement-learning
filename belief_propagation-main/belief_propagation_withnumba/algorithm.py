@@ -2,22 +2,20 @@ from graph import TannerGraph
 from numpy.typing import ArrayLike, NDArray
 import numpy as np
 import concurrent.futures
-from concurrent.futures import ThreadPoolExecutor
-import random
 
+# Belief Propagation class definition for decoding
 class BeliefPropagation:
-    def __init__(self, graph: TannerGraph, h: ArrayLike, max_iter: int, sequence: list[int]):
+    def __init__(self, graph: TannerGraph, h: ArrayLike, max_iter: int):
         self.h = np.array(h)
         self.graph = graph
         self.n = len(graph.v_nodes)
         self.max_iter = max_iter
-        self.sequence = sequence
 
     def decode(self, channel_llr) -> tuple[NDArray, NDArray, bool]:
         if len(channel_llr) != self.n:
             raise ValueError("incorrect block size")
 
-        # Initialize variable nodes with channel LLR
+        # Initial step: Initialize variable nodes with channel LLR
         for idx, node in enumerate(self.graph.ordered_v_nodes()):
             node.initialize(channel_llr[idx])
 
@@ -25,16 +23,18 @@ class BeliefPropagation:
         for node in self.graph.c_nodes.values():
             node.receive_messages()
 
-        # Perform the decoding process according to the specified sequence
         for iteration in range(self.max_iter):
             print(f"Iteration {iteration + 1}")
 
-            # Update check nodes in the specified sequence and update variable nodes immediately after each check node
-            for cnode_id in self.sequence:
-                self.graph.c_nodes[cnode_id].receive_messages()
-                for vnode in self.graph.v_nodes.values():
-                    vnode.receive_messages()
-                    vnode.update_llr()
+            # Check to Variable Node Step: Process CNodes layer by layer
+            for layer in sorted(set(node.layer for node in self.graph.c_nodes.values())):
+                print(f"Processing layer {layer}")
+                for node in [n for n in self.graph.c_nodes.values() if n.layer == layer]:
+                    node.receive_messages()
+
+            # Variable to Check Node Step
+            for node in self.graph.v_nodes.values():
+                node.receive_messages()
 
             # Calculate LLR for each variable node
             llr = np.array([node.estimate() for node in self.graph.ordered_v_nodes()])
@@ -49,7 +49,6 @@ class BeliefPropagation:
             print(f"Syndrome after iteration {iteration + 1}: {syndrome}")
 
             if not syndrome.any():
-                return estimate, llr, True
+                break
 
-        return estimate, llr, False
-
+        return estimate, llr, not syndrome.any()
