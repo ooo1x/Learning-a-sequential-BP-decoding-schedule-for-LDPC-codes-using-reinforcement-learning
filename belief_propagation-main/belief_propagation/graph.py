@@ -1,6 +1,6 @@
 from __future__ import annotations
 import networkx as nx
-from node import VNode, CNode
+from node import VNode, CNode, Node
 import numpy as np
 import numpy.typing as npt
 from typing import Callable
@@ -8,6 +8,7 @@ from typing import Callable
 
 class TannerGraph:
     def __init__(self):
+        Node.reset_uid_generator()
         self.v_nodes: dict[int, VNode] = {}
         self.c_nodes: dict[int, CNode] = {}
         self.edges = set()

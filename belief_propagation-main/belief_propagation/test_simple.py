@@ -6,7 +6,6 @@ import numpy as np
 H = np.array([[1,1,0,1,1,0,0], [1,0,1,1,0,1,0],[0,1,1,1,0,0,1]])
 
 # Define AWGN channel model parameters
-np.random.seed(42)
 sigma = 0.6
 
 # Original codeword: [1, 0, 0, 0, 1, 1, 0]

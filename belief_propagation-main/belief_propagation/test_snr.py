@@ -54,6 +54,8 @@ def load_sparse_matrix(filepath):
     num_cols = np.max(col_indices) + 1
     return coo_matrix((data, (row_indices, col_indices)), shape=(num_rows, num_cols)).toarray()
 
+
+
 H_64 = load_sparse_matrix('k64_n128_bg2_H_sparse.npy')
 H_1024 = load_sparse_matrix('k1024_n2048_CCSDS_H_sparse.npy')
 
@@ -74,7 +76,7 @@ for H, codeword, label in [(H_64, original_codeword_64, '64'), (H_1024, original
         ber_values.append(ber)
     ax.semilogy(snr_db_range, ber_values, marker='o', label=f'LDPC {label}')
 
-ax.set_xlabel('Es/N0 (dB)')
+ax.set_xlabel('Eb/N0 (dB)')
 ax.set_ylabel('BER')
 ax.set_title('SNR vs BER for LDPC Codes of Different Lengths')
 ax.grid(True, which='both', linestyle='--', linewidth=0.5)

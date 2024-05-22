@@ -17,7 +17,6 @@ original_codeword = np.zeros(H.shape[1]).astype(int)
 all_c_nodes_indices = np.arange(H.shape[1], H.shape[1] + H.shape[0])
 sequence = np.random.permutation(all_c_nodes_indices)
 
-
 #Define AWGN channel model parameters
 np.random.seed(42)
 sigma = 0.6

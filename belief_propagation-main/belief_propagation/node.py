@@ -17,6 +17,10 @@ class Node(ABC):
     """
     _uid_generator = itertools.count()
 
+    @staticmethod
+    def reset_uid_generator():
+        Node._uid_generator = itertools.count()
+
     def __init__(self, name: str = "", ordering_key: int = None) -> None:
         """
         :param name: name of node

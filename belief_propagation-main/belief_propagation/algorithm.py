@@ -38,15 +38,15 @@ class BeliefPropagation:
 
             # Calculate LLR for each variable node
             llr = np.array([node.estimate() for node in self.graph.ordered_v_nodes()])
-            print(f"LLR after iteration {iteration + 1}: {llr}")
+            # print(f"LLR after iteration {iteration + 1}: {llr}")
 
             # Generate hard decisions from LLR values
             estimate = np.array([1 if node_llr < 0 else 0 for node_llr in llr])
-            print(f"Estimate after iteration {iteration + 1}: {estimate}")
+            # print(f"Estimate after iteration {iteration + 1}: {estimate}")
 
             # Calculate syndrome to check if the codeword satisfies all parity checks
             syndrome = self.h.dot(estimate) % 2
-            print(f"Syndrome after iteration {iteration + 1}: {syndrome}")
+            # print(f"Syndrome after iteration {iteration + 1}: {syndrome}")
 
             if not syndrome.any():
                 return estimate, llr, True

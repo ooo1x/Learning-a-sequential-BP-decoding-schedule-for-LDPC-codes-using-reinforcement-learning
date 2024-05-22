@@ -4,35 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33c695ea-78e1-44dd-a406-597587e33eb0" name="Changes" comment="BP_propagation">
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_snr.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_snr_simple.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/algorithm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/channel_models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/example_graph.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/graph.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/graph_example.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/node.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test_simple.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test_snr.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test_snr_simple.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_5_10_3_11_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_5_10_3_11__Changes_.xml" beforeDir="false" />
+    <list default="true" id="33c695ea-78e1-44dd-a406-597587e33eb0" name="Changes" comment="BP_propagation_llr_sequence">
+      <change afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/generate_codeword.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/algorithm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/example_propagation.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_simple.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/graph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/node.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/node.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/propagation_npyfiles.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldpc_decoding-master/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldpc_decoding-master/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldpc_decoding-master/k1024_n2048_CCSDS_H_sparse.npy" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/k1024_n2048_CCSDS_H_sparse.npy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldpc_decoding-master/k64_n128_bg2_H_sparse.npy" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/k64_n128_bg2_H_sparse.npy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldpc_decoding-master/sum_product.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldpc_decoding-master/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ldpc_decoding-master/test_simple.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_snr.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_snr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_snr_simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/belief_propagation-main/belief_propagation/test_snr_simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/algorithm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/channel_models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/example_graph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/graph.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/graph_example.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/k1024_n2048_CCSDS_H_sparse.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/k64_n128_bg2_H_sparse.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/node.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test_simple.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test_snr.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/belief_propagation-main/belief_propagation_withnumba/test_snr_simple.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,45 +65,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.BPSK.executor": "Run",
-    "Python.BPSK_upgrade.executor": "Run",
-    "Python.Belief-update.executor": "Run",
-    "Python.Beliefpropagation.executor": "Run",
-    "Python.algorithm.executor": "Debug",
-    "Python.channel_models.executor": "Run",
-    "Python.example_propagation.executor": "Run",
-    "Python.graph.executor": "Debug",
-    "Python.graph_example.executor": "Run",
-    "Python.ldpcSumProduct.executor": "Run",
-    "Python.node.executor": "Run",
-    "Python.propagation_npyfiles.executor": "Run",
-    "Python.read.executor": "Run",
-    "Python.sum_product.executor": "Run",
-    "Python.test.executor": "Debug",
-    "Python.test_simple.executor": "Run",
-    "Python.test_snr.executor": "Run",
-    "Python.test_snr_simple.executor": "Run",
-    "Python.windowed_dec.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
-    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
-    "WebServerToolWindowPanel.toolwindow.show.date": "false",
-    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
-    "WebServerToolWindowPanel.toolwindow.show.size": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/91931/PycharmProjects/researchproject/belief_propagation-main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.deploy.options",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.BPSK.executor&quot;: &quot;Run&quot;,
+    &quot;Python.BPSK_upgrade.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Belief-update.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Beliefpropagation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.algorithm.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.channel_models.executor&quot;: &quot;Run&quot;,
+    &quot;Python.example_propagation.executor&quot;: &quot;Run&quot;,
+    &quot;Python.generate_codeword.executor&quot;: &quot;Run&quot;,
+    &quot;Python.graph.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.graph_example.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ldpcSumProduct.executor&quot;: &quot;Run&quot;,
+    &quot;Python.node.executor&quot;: &quot;Run&quot;,
+    &quot;Python.propagation_npyfiles.executor&quot;: &quot;Run&quot;,
+    &quot;Python.read.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sum_product.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_simple.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_snr.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_snr_simple.executor&quot;: &quot;Run&quot;,
+    &quot;Python.windowed_dec.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/91931/PycharmProjects/researchproject/belief_propagation-main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.deploy.options&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\91931\PycharmProjects\researchproject\belief_propagation-main" />
@@ -154,7 +149,9 @@
       <workItem from="1715330786970" duration="10109000" />
       <workItem from="1715428129981" duration="39872000" />
       <workItem from="1715789238663" duration="25606000" />
-      <workItem from="1716035685895" duration="3724000" />
+      <workItem from="1716035685895" duration="5277000" />
+      <workItem from="1716301185724" duration="10877000" />
+      <workItem from="1716379275645" duration="1258000" />
     </task>
     <task id="LOCAL-00001" summary="BPSK_with_function">
       <option name="closed" value="true" />
@@ -220,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715717556510</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="BP_propagation_llr_sequence">
+      <option name="closed" value="true" />
+      <created>1716040890232</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1716040890232</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,40 +246,31 @@
     <MESSAGE value="BPSK transmission system" />
     <MESSAGE value="BPSK_with_function" />
     <MESSAGE value="BP_propagation" />
-    <option name="LAST_COMMIT_MESSAGE" value="BP_propagation" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/belief_propagation-main/belief_propagation/node.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="BP_propagation_llr_sequence" />
+    <option name="LAST_COMMIT_MESSAGE" value="BP_propagation_llr_sequence" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/researchproject$sum_product.coverage" NAME="sum_product Coverage Results" MODIFIED="1715701821238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ldpc_decoding-master" />
     <SUITE FILE_PATH="coverage/researchproject$Belief_update.coverage" NAME="Belief-update Coverage Results" MODIFIED="1715618757579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$ldpcSumProduct.coverage" NAME="ldpcSumProduct Coverage Results" MODIFIED="1715621467115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LDPC" />
-    <SUITE FILE_PATH="coverage/researchproject$test_snr_simple.coverage" NAME="test_snr_simple Coverage Results" MODIFIED="1715859897653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$test_snr_simple.coverage" NAME="test_snr_simple Coverage Results" MODIFIED="1716328196805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/researchproject$BPSK_upgrade.coverage" NAME="BPSK_upgrade Coverage Results" MODIFIED="1715293520021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$propagation_npyfiles.coverage" NAME="propagation_npyfiles Coverage Results" MODIFIED="1715802320073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
-    <SUITE FILE_PATH="coverage/researchproject$test.coverage" NAME="test Coverage Results" MODIFIED="1716040476992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$test.coverage" NAME="test Coverage Results" MODIFIED="1716040785841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/researchproject$example_propagation.coverage" NAME="example_propagation Coverage Results" MODIFIED="1715802289942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/FA$BPSK.coverage" NAME="BPSK Coverage Results" MODIFIED="1714766022978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$read.coverage" NAME="read Coverage Results" MODIFIED="1715351148344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$BPSK.coverage" NAME="BPSK Coverage Results" MODIFIED="1714766901901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$windowed_dec.coverage" NAME="windowed_dec Coverage Results" MODIFIED="1715635674854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ldpc_decoding-master" />
     <SUITE FILE_PATH="coverage/researchproject$algorithm.coverage" NAME="algorithm Coverage Results" MODIFIED="1715872337163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
-    <SUITE FILE_PATH="coverage/researchproject$test_simple.coverage" NAME="test_simple Coverage Results" MODIFIED="1716039707343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$test_simple.coverage" NAME="test_simple Coverage Results" MODIFIED="1716305211065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/researchproject$graph_example.coverage" NAME="graph_example Coverage Results" MODIFIED="1715718426147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$generate_codeword.coverage" NAME="generate_codeword Coverage Results" MODIFIED="1716379322971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/FA$test.coverage" NAME="test Coverage Results" MODIFIED="1714751133171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$channel_models.coverage" NAME="channel_models Coverage Results" MODIFIED="1715280710357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/researchproject$Beliefpropagation.coverage" NAME="Beliefpropagation Coverage Results" MODIFIED="1715621019571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$node.coverage" NAME="node Coverage Results" MODIFIED="1715719582256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/researchproject$graph.coverage" NAME="graph Coverage Results" MODIFIED="1716036491415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
-    <SUITE FILE_PATH="coverage/researchproject$test_snr.coverage" NAME="test_snr Coverage Results" MODIFIED="1715803574340" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$test_snr.coverage" NAME="test_snr Coverage Results" MODIFIED="1716301747189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
   </component>
 </project>
