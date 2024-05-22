@@ -6,6 +6,7 @@ from functools import total_ordering
 from abc import ABC, abstractmethod
 import time
 import sys
+from numba import jit
 
 
 @total_ordering
@@ -73,11 +74,20 @@ class CNode(Node):
     def initialize(self):
         self.received_messages = {node_uid: 0 for node_uid in self.neighbors}
 
-    def message(self, requester_uid: int) -> np.float_:
+    def get_messages(self, requester_uid: int) -> np.ndarray:
         messages = [self.received_messages[uid] for uid in self.neighbors if uid != requester_uid]
-        product_tanh = np.prod(np.tanh(np.array(messages) / 2))
-        safe_product_tanh = np.clip(product_tanh, -0.999999, 0.999999)
-        return 2 * np.arctanh(safe_product_tanh)
+        return np.array(messages, dtype=np.float64)
+
+    @staticmethod
+    @jit(nopython=True)
+    def calculate_message(messages: np.ndarray) -> float:
+        product_tanh = np.prod(np.tanh(messages / 2))
+        # safe_product_tanh = np.clip(product_tanh, -0.999999, 0.999999)
+        return 2 * np.arctanh(product_tanh)
+
+    def message(self, requester_uid: int) -> float:
+        messages = self.get_messages(requester_uid)
+        return self.calculate_message(messages)
 
     def send_messages(self):
         for uid in self.neighbors:

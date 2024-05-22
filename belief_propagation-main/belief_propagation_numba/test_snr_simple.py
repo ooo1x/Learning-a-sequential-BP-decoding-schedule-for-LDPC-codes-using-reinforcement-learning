@@ -5,7 +5,7 @@ from graph import TannerGraph
 from channel_models import awgn_llr
 import time
 
-def simulate_awgn_bpsk_transmission(H, original_codeword, snr_db, max_iter=10, num_trials=100):
+def simulate_awgn_bpsk_transmission(H, original_codeword, snr_db, max_iter=10, num_trials=1):
     start_time = time.time()
     n = original_codeword.shape[1]
     ber_results = np.zeros(len(original_codeword))
@@ -53,7 +53,7 @@ def simulate_awgn_bpsk_transmission(H, original_codeword, snr_db, max_iter=10, n
 
     # Average BER across all codewords
     average_ber = np.mean(ber_results)
-    with open(f"iteration_times_snr_{snr_db}.txt", 'w') as f:
+    with open(f"numba_iteration_times_snr_{snr_db}.txt", 'w') as f:
         for trial_times in all_iteration_times:
             for times in trial_times:
                 f.write(" ".join(map(str, times)) + "\n")
@@ -74,7 +74,7 @@ runtime_data = []
 
 # Simulation and plotting
 fig, ax = plt.subplots(figsize=(10, 6))
-with open("total_runtimes.txt", 'w') as f:
+with open("numba_total_runtimes.txt", 'w') as f:
     for snr_db in snr_db_range:
         average_ber, runtime = simulate_awgn_bpsk_transmission(H, original_codeword, snr_db)
         ber_values.append(average_ber)
