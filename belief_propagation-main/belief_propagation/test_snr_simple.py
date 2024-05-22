@@ -6,9 +6,7 @@ from channel_models import awgn_llr
 
 
 def simulate_awgn_bpsk_transmission(H, original_codeword, snr_db, max_iter=10, num_trials=100):
-    # Define the length of codewords
     n = original_codeword.shape[1]
-    # Prepare to collect BERs
     ber_results = np.zeros(len(original_codeword))
 
     for idx, original_codeword in enumerate(original_codeword):
@@ -18,25 +16,15 @@ def simulate_awgn_bpsk_transmission(H, original_codeword, snr_db, max_iter=10, n
             print(f"Trial {_ +1}")
             # BPSK modulation
             transmitted_codeword = 1 - 2 * original_codeword
-            # Calculate noise standard deviation from SNR
             snr_linear = 10 ** (snr_db / 10)
-            Eb = 1  # Energy per bit is 1 for BPSK
+            Eb = 1
             N0 = Eb / snr_linear
             sigma = np.sqrt(N0 / 2)
 
-            # Received codeword (with some noise added)
             received_codeword = transmitted_codeword + sigma * np.random.randn(n)
-
-            # Compute LLR for received symbols in AWGN channel
             channel_llr = awgn_llr(sigma, received_codeword)
-
-            # Create a Tanner graph for the given H matrix and AWGN channel model
             tg = TannerGraph.from_biadjacency_matrix(H, channel_model=lambda x: x)
-
-            # Specify sequence based on your Tanner graph structure
-            sequence = [7, 8, 9]  # This needs to be adjusted according to your Tanner graph structure
-
-            # Perform decoding
+            sequence = [7, 8, 9]
             bp = BeliefPropagation(tg, H, max_iter, sequence=sequence)
             estimate, llr, decode_success = bp.decode(channel_llr)
 
