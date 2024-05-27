@@ -16,37 +16,39 @@ class BeliefPropagation:
             raise ValueError("incorrect block size")
         iteration_times = []
 
-        # Initialize variable nodes with channel LLR
+        # initial step
         for idx, node in enumerate(self.graph.ordered_v_nodes()):
             node.initialize(channel_llr[idx])
 
-        # Send initial channel-based messages to check nodes
-        for node in self.graph.c_nodes.values():
-            node.receive_messages()
+        # # Send initial channel-based messages to check nodes
+        # for node in self.graph.c_nodes.values():
+        #     node.receive_messages()
 
         # Perform the decoding process according to the specified sequence
         for iteration in range(self.max_iter):
-            print(f"Iteration {iteration + 1}")
+            # print(f"Iteration {iteration + 1}")
             start_time = time.time()
-
-            # Update check nodes in the specified sequence and update variable nodes immediately after each check node
             for cnode_id in self.sequence:
-                self.graph.c_nodes[cnode_id].receive_messages()
-                for vnode in self.graph.v_nodes.values():
-                    vnode.receive_messages()
+                cnode = self.graph.c_nodes[cnode_id]
+                cnode.receive_messages()
+                # print("[{}] received".format(cnode_id))
+                for vnode_id in cnode.get_neighbors():
+                    # print("[{}] connected vnode ids: {}".format(cnode_id, cnode.get_neighbors()))
+                    vnode = self.graph.v_nodes[vnode_id]
+                    vnode.receive_messages(current_cnode_id=cnode_id)
                     vnode.update_llr()
+
+            # for vnode_id in self.graph.v_nodes.values():
+            #     vnode_id.receive_messages()
+            #     print("[{}] received".format(vnode_id))
 
             llr = np.array([node.estimate() for node in self.graph.ordered_v_nodes()])
             # print(f"LLR after iteration {iteration + 1}: {llr}")
             estimate = np.array([1 if node_llr < 0 else 0 for node_llr in llr])
-            # print(f"Estimate after iteration {iteration + 1}: {estimate}")
             syndrome = self.h.dot(estimate) % 2
-            # print(f"Syndrome after iteration {iteration + 1}: {syndrome}")
             end_time = time.time()
             iteration_times.append(end_time - start_time)
-
             if not syndrome.any():
-                return estimate, llr, True, iteration_times
+                break
 
-        return estimate, llr, False, iteration_times
-
+        return estimate, llr, not syndrome.any(), iteration_times

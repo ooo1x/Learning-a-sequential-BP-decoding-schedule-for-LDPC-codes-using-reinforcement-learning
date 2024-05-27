@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.sparse import coo_matrix, save_npz
 
-indices = np.load('belief_propagation-main/belief_propagation/k1024_n2048_CCSDS_H_sparse.npy')
+indices = np.load('belief_propagation-main/belief_propagation_flooding/k1024_n2048_CCSDS_H_sparse.npy')
 
 row_indices = indices[0]
 col_indices = indices[1]
@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 from scipy.sparse import coo_matrix
 
 
-indices = np.load('belief_propagation-main/belief_propagation/k1024_n2048_CCSDS_H_sparse.npy')
+indices = np.load('belief_propagation-main/belief_propagation_flooding/k1024_n2048_CCSDS_H_sparse.npy')
 row_indices = indices[0]
 col_indices = indices[1]
 
@@ -38,3 +38,11 @@ ax.set_title('Sparse Matrix Visualization')
 ax.set_xlabel(f'Column Index (Total Columns: {num_cols})')
 ax.set_ylabel(f'Row Index (Total Rows: {num_rows})')
 plt.show()
+
+import numpy as np
+import scipy.io
+
+indices = np.load('k1024_n2048_CCSDS_H_sparse.npy')
+row_indices, col_indices = indices[0], indices[1]
+
+scipy.io.savemat('k1024_n2048_CCSDS_H_sparse.mat', {'row_indices': row_indices, 'col_indices': col_indices})

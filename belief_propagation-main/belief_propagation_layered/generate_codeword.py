@@ -1,20 +1,20 @@
 import numpy as np
 from scipy.sparse import coo_matrix
 
-# H = np.array([
-#     [1, 1, 0, 1, 1, 0, 0],
-#     [1, 0, 1, 1, 0, 1, 0],
-#     [0, 1, 1, 1, 0, 0, 1]
-# ])
-def load_sparse_matrix(filepath):
-    indices = np.load(filepath)
-    row_indices, col_indices = indices[0], indices[1]
-    data = np.ones_like(row_indices)
-    num_rows = np.max(row_indices) + 1
-    num_cols = np.max(col_indices) + 1
-    return coo_matrix((data, (row_indices, col_indices)), shape=(num_rows, num_cols)).toarray()
-
-H = load_sparse_matrix('k64_n128_bg2_H_sparse.npy')
+H = np.array([
+    [1, 1, 0, 1, 1, 0, 0],
+    [1, 0, 1, 1, 0, 1, 0],
+    [0, 1, 1, 1, 0, 0, 1]
+])
+# def load_sparse_matrix(filepath):
+#     indices = np.load(filepath)
+#     row_indices, col_indices = indices[0], indices[1]
+#     data = np.ones_like(row_indices)
+#     num_rows = np.max(row_indices) + 1
+#     num_cols = np.max(col_indices) + 1
+#     return coo_matrix((data, (row_indices, col_indices)), shape=(num_rows, num_cols)).toarray()
+#
+# H = load_sparse_matrix('k64_n128_bg2_H_sparse.npy')
 def generate_codewords(H, required_count):
     n = H.shape[1]
     valid_codewords = []

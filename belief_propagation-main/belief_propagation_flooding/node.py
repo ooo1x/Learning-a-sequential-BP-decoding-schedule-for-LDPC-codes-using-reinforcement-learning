@@ -4,9 +4,7 @@ import itertools
 from typing import Any, Callable
 from functools import total_ordering
 from abc import ABC, abstractmethod
-import time
-import sys
-
+from numba import njit
 
 @total_ordering
 class Node(ABC):
@@ -46,6 +44,7 @@ class Node(ABC):
     def receive_messages(self) -> None:
         for node_id, node in self.neighbors.items():
             self.received_messages[node_id] = node.message(self.uid)
+            # print(f"Node {self.uid} received message from Node {node_id}: {node.message(self.uid)}")
 
     @abstractmethod
     def message(self, requester_uid: int) -> Any:
@@ -69,31 +68,52 @@ class Node(ABC):
         return self.ordering_key < other.ordering_key
 
 
+# class CNode(Node):
+#     def initialize(self):
+#         self.received_messages = {node_uid: 0 for node_uid in self.neighbors}
+#
+#     def message(self, requester_uid: int) -> np.float_:
+#         messages = [self.received_messages[uid] for uid in self.neighbors if uid != requester_uid]
+#         product_tanh = np.prod(np.tanh(np.array(messages) / 2))
+#         safe_product_tanh = np.clip(product_tanh, -0.999999, 0.999999)
+#         return 2 * np.arctanh(safe_product_tanh)
+
 class CNode(Node):
     def initialize(self):
         self.received_messages = {node_uid: 0 for node_uid in self.neighbors}
 
-    def message(self, requester_uid: int) -> np.float_:
+    def get_messages(self, requester_uid: int) -> np.ndarray:
         messages = [self.received_messages[uid] for uid in self.neighbors if uid != requester_uid]
-        product_tanh = np.prod(np.tanh(np.array(messages) / 2))
-        safe_product_tanh = np.clip(product_tanh, -0.999999, 0.999999)
+        return np.array(messages, dtype=np.float64)
+
+    @staticmethod
+    @njit
+    def calculate_message(messages: np.ndarray) -> float:
+        product_tanh = np.prod(np.tanh(messages / 2))
+        product_tanh_array = np.array([product_tanh])
+        safe_product_tanh = np.clip(product_tanh_array, -0.999999, 0.999999)
         return 2 * np.arctanh(safe_product_tanh)
 
-    def send_messages(self):
-        for uid in self.neighbors:
-            message = self.message(uid)
-            self.neighbors[uid].receive_message(self.uid, message)
-            self.neighbors[uid].update_llr()
+    def message(self, requester_uid: int) -> float:
+        messages = self.get_messages(requester_uid)
+        return self.calculate_message(messages)
 
 
 
 class VNode(Node):
     def __init__(self, channel_model: Callable, ordering_key: int, name: str = ""):
-        super().__init__(name, ordering_key)
+        """
+        :param channel_model: a function which receives channel outputs anr returns relevant message
+        :param ordering_key: used to order nodes per their order in the parity check matrix
+        :param name: optional name of node
+        """
         self.channel_model = channel_model
+        self.channel_symbol: int = None  # currently assuming hard channel symbols
         self.channel_llr: np.float_ = None
+        super().__init__(name, ordering_key)
 
     def initialize(self, channel_symbol):
+        self.channel_symbol = channel_symbol
         self.channel_llr = self.channel_model(channel_symbol)
         self.received_messages = {node_uid: 0 for node_uid in self.neighbors}
 
@@ -104,9 +124,3 @@ class VNode(Node):
 
     def estimate(self) -> np.float_:
         return self.channel_llr + np.sum(list(self.received_messages.values()))
-
-    def update_llr(self):
-        new_llr = self.estimate()
-        if self.channel_llr != new_llr:
-            self.channel_llr = new_llr
-

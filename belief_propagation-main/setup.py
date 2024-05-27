@@ -12,7 +12,7 @@ README = HERE.joinpath("README.md").read_text()
 setup(
     name='belief-propagation-ldpc',
     version=VERSION,
-    packages=['belief_propagation'],
+    packages=['belief_propagation_flooding'],
     url='https://github.com/YairMZ/belief_propagation',
     license='MIT',
     author='Yair Mazal',
