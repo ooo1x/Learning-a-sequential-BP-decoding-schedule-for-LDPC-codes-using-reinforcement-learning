@@ -15,7 +15,7 @@ class TannerGraph:
 
     def add_v_node(self, channel_model: Callable, ordering_key: int, name: str = "") -> VNode:
         """
-        :param ordering_key: should reflect order according to parity check matrix, channel symbols in order
+        :param ordering_key: should reflect order according to parity check Matrix_version, channel symbols in order
         :param name: name of node.
         :param channel_model: add an exiting node to graph. If not used a new node is created.
         """
@@ -90,7 +90,7 @@ class TannerGraph:
     def from_biadjacency_matrix(cls, h: npt.ArrayLike, channel_model: Callable) -> TannerGraph:
         """
         :param channel_model: channel model to compute channel symbols llr within v nodes
-        :param h: parity check matrix, shape MXN with M check nodes and N variable nodes. assumed binary matrix.
+        :param h: parity check Matrix_version, shape MXN with M check nodes and N variable nodes. assumed binary Matrix_version.
         """
         g = cls()
         h = np.array(h)

@@ -50,7 +50,7 @@ edges = {("v0", "c0"), ("v0", "c1"), ("v1", "c0"), ("v1", "c2"), ("v2", "c0"), (
          ("v8", "c2"), ("v8", "c4"), ("v9", "c3"), ("v9", "c4")}
 tg.add_edges_by_name(edges)
 
-# Alternatively given a biadjacency matrix (parity check matrix) a graph can be constructed from it
+# Alternatively given a biadjacency Matrix_version (parity check Matrix_version) a graph can be constructed from it
 H = np.array([[1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
               [1, 0, 0, 0, 1, 1, 1, 0, 0, 0],
               [0, 1, 0, 0, 1, 0, 0, 1, 1, 0],
@@ -93,7 +93,7 @@ fig.show()
 ```python
 from belief_propagation import BeliefPropagation, TannerGraph, bsc_llr
 import numpy as np
-# consider a parity check matrix
+# consider a parity check Matrix_version
 H = np.array([[1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
               [1, 0, 0, 0, 1, 1, 1, 0, 0, 0],
               [0, 1, 0, 0, 1, 0, 0, 1, 1, 0],

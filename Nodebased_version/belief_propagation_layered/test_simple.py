@@ -19,7 +19,7 @@ received_codeword = transmitted_codeword + sigma * np.random.randn(len(transmitt
 # Compute LLR for received symbols in AWGN channel
 channel_llr = awgn_llr(sigma, received_codeword)
 
-# Create a Tanner graph for the given H matrix and AWGN channel model
+# Create a Tanner graph for the given H Matrix_version and AWGN channel model
 tg = TannerGraph.from_biadjacency_matrix(H, channel_model=lambda x: x)
 
 sequence = [9, 8, 7]

@@ -20,7 +20,7 @@ tg.add_edges_by_name(edges)
 g = tg.to_nx()
 H = bipartite.biadjacency_matrix(g, list(tg.c_nodes.keys()), column_order=tg.v_nodes.keys()).toarray()
 
-# or construct from matrix
+# or construct from Matrix_version
 tg2 = TannerGraph.from_biadjacency_matrix(H, channel_model=bsc_llr(0.1))
 
 

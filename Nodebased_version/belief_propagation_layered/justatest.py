@@ -7,17 +7,16 @@ def channel_model(x):
 
 channel_llr = np.array([0.5, -0.3, 0.7, -0.5, 0.2, -0.1])
 
-H = [
-    [1, 1, 0, 1, 0, 0],
-    [0, 1, 1, 0, 1, 0],
-    [1, 0, 1, 0, 0, 1]
-]
+H =  [1, 1, 0, 1, 0, 0], [0, 1, 1, 0, 1, 0], [1, 0, 1, 0, 0, 1]
 
 graph = TannerGraph.from_biadjacency_matrix(H,channel_model)
 
-bp= BeliefPropagation(graph, H, max_iter=5, sequence=[6, 7, 8])
+bp= BeliefPropagation(graph, H, max_iter=5, sequence=[6, 8, 7])
 
 
 estimate, llr, decode_success, iteration_times = bp.decode(channel_llr)
 
 print(estimate)
+
+
+

@@ -20,13 +20,9 @@ class BeliefPropagation:
         for idx, node in enumerate(self.graph.ordered_v_nodes()):
             node.initialize(channel_llr[idx])
 
-        # # Send initial channel-based messages to check nodes
-        # for node in self.graph.c_nodes.values():
-        #     node.receive_messages()
-
         # Perform the decoding process according to the specified sequence
         for iteration in range(self.max_iter):
-            # print(f"Iteration {iteration + 1}")
+            print(f"Iteration {iteration + 1}")
             start_time = time.time()
             for cnode_id in self.sequence:
                 cnode = self.graph.c_nodes[cnode_id]
@@ -43,7 +39,7 @@ class BeliefPropagation:
             #     print("[{}] received".format(vnode_id))
 
             llr = np.array([node.estimate() for node in self.graph.ordered_v_nodes()])
-            # print(f"LLR after iteration {iteration + 1}: {llr}")
+            print(f"LLR after iteration {iteration + 1}: {llr}")
             estimate = np.array([1 if node_llr < 0 else 0 for node_llr in llr])
             syndrome = self.h.dot(estimate) % 2
             end_time = time.time()

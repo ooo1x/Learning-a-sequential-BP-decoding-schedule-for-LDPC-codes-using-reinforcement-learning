@@ -13,7 +13,7 @@ def simulate_awgn_bpsk_transmission(H, original_codeword, eb_n0_db, max_iter=10,
     bler_results = np.zeros(len(original_codeword))
     all_iteration_times = []
     all_c_nodes_indices = np.arange(H.shape[1], H.shape[1] + H.shape[0])
-    sequence = [7,8,9]
+    sequence = all_c_nodes_indices
     # print(f"Sequence of c-node indices for message passing: {sequence}")
 
     eb_n0_linear = 10 ** (eb_n0_db / 10)
@@ -59,7 +59,7 @@ def simulate_awgn_bpsk_transmission(H, original_codeword, eb_n0_db, max_iter=10,
     average_bler = np.mean(bler_results)
     return average_ber,total_duration, average_bler
 
-# Define the H matrix
+# Define the H Matrix_version
 def load_sparse_matrix(filepath):
     indices = np.load(filepath)
     row_indices, col_indices = indices[0], indices[1]
@@ -68,20 +68,18 @@ def load_sparse_matrix(filepath):
     num_cols = np.max(col_indices) + 1
     return coo_matrix((data, (row_indices, col_indices)), shape=(num_rows, num_cols)).toarray()
 
-# H = load_sparse_matrix('k64_n128_bg2_H_sparse.npy')
-H = np.array([[1, 1, 0, 1, 1, 0, 0], [1, 0, 1, 1, 0, 1, 0], [0, 1, 1, 1, 0, 0, 1]])
+H = load_sparse_matrix('k64_n128_bg2_H_sparse.npy')
+# H = np.array([[1, 1, 0, 1, 1, 0, 0], [1, 0, 1, 1, 0, 1, 0], [0, 1, 1, 1, 0, 0, 1]])
 # Codewords
-original_codeword = np.loadtxt("hamming_codewords.txt")*0
-# original_codeword = np.loadtxt("k64_codewords.txt")*0
+# original_codeword = np.loadtxt("hamming_codewords.txt")*0
+original_codeword = np.loadtxt("k64_codewords.txt")*0
 
 # Define SNR range in dB
-eb_n0_db_range = np.arange(0, 8, 1)
+eb_n0_db_range = np.arange(0, 3, 1)
 ber_values = []
 runtime_data = []
 
-# Simulation and plotting
-fig, ax = plt.subplots(figsize=(10, 6))
-with open("ber_snr_results_layered_with_numba.txt", 'w') as f:
+with open("../belief_propagation_layered/k64_ber_snr_results_flooding_withnumba.txt", 'w') as f:
     for eb_n0_db in eb_n0_db_range:
         average_ber, runtime , average_bler = simulate_awgn_bpsk_transmission(H, original_codeword, eb_n0_db)
         ber_values.append(average_ber)
