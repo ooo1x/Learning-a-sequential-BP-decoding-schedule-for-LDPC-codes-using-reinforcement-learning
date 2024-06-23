@@ -41,11 +41,10 @@ def simulate_awgn_bpsk_transmission(args):
             Eb = 1
             N0 = Eb / eb_n0_linear
             sigma = np.sqrt(N0 / 2)
-            channel_llrs_for_codeword = []
 
             received_codeword = transmitted_codeword + sigma * np.random.randn(n)
             channel_llr = awgn_llr(sigma, received_codeword)
-            channel_llrs_for_codeword.append(channel_llr.tolist())#save channel llr for RL
+            all_channel_llrs.append(channel_llr.tolist())
             # channel_llr_hard = -0.5*(np.sign(channel_llr)-1)
             bp = BeliefPropagation(H, max_iter, sequence=sequence)
             estimate, llr, decode_success = bp.decode(channel_llr)
@@ -59,18 +58,16 @@ def simulate_awgn_bpsk_transmission(args):
 
         ber_results[idx] = ber_sum / num_trials
         bler_results[idx] = block_errors / num_trials
-        all_channel_llrs.append(channel_llrs_for_codeword)
 
     end_time = time.perf_counter()
     total_duration = end_time - start_time
-    with open(f"llrs_ebn0_{eb_n0_db}.txt", 'w') as f:
-        for llrs in all_channel_llrs:
-            for llr in llrs:
-                f.write(' '.join(map(str, llr)) + '\n')
 
     # Average BER across all codewords
     average_ber = np.mean(ber_results)
     average_bler = np.mean(bler_results)
+    with open(f"llrs_snr_{eb_n0_db}.txt", 'a') as f:
+        for llr in all_channel_llrs:
+            f.write(' '.join(map(str, llr)) + '\n')
     return eb_n0_db, average_ber, average_bler, total_duration
 
 
@@ -93,13 +90,13 @@ def main():
     # print("Rank of G:", rank_G)
     # print("Rank of H:", rank_H)
     original_codeword = generate_random_codewords(G)
-    original_codeword = original_codeword[np.random.choice(original_codeword.shape[0], 100, replace=False), :]
+    original_codeword = original_codeword[np.random.choice(original_codeword.shape[0], 4, replace=False), :]*0
     # print("selected_codewords:", selected_codewords)
 
     # Define SNR range in dB
     eb_n0_db_range = np.ones(8)*2.5#np.arange(0, 3, 0.5)
     max_iter = 10
-    num_trials = 3000
+    num_trials = 1000
 
     args = [(H, original_codeword, db, max_iter, num_trials) for db in eb_n0_db_range]
     with Pool(processes=cpu_count()) as pool:
