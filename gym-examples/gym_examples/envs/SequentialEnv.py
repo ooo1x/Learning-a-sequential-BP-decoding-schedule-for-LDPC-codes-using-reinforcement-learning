@@ -7,13 +7,12 @@ from datetime import datetime
 from codeword_generator import generate_random_codewords, h2g, row_rank
 
 class SequentialEnv(gym.Env):
-    def __init__(self, H, snr_db, max_iter=25,sequence=None):
+    def __init__(self, H, snr_db, max_iter=3, sequence=None):
         print("SequentialEnv init...")
         super(SequentialEnv, self).__init__()
         self.H = H
         self.G = h2g(H)
         self.snr_db = snr_db
-        self.current_step = 0
         self.max_iter = max_iter
         self.sequence = sequence if sequence is not None else list(range(H.shape[0]))
         self.bp_decoder = BeliefPropagation(self.H, self.max_iter, self.sequence)
@@ -55,7 +54,7 @@ class SequentialEnv(gym.Env):
         state = int(binary_string, 2)
         return state
 
-    def step(self, action): 
+    def step(self, action):
         selected_cn_indices = [self.sequence[action]]
         updated_llr, residuals, estimate= self.bp_decoder.decode(self.llr, selected_cn_indices)
         reward = self._compute_reward(residuals)
@@ -63,7 +62,7 @@ class SequentialEnv(gym.Env):
         info = {'estimate': estimate}
         done = False  
         truncated = False  
-        if self.current_step >= 1:  # max_step in one episode
+        if self.current_step >= 100:  # max_step in one episode
             done = True
             truncated = False
         self.current_step += 1

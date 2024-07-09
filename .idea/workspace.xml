@@ -4,9 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33c695ea-78e1-44dd-a406-597587e33eb0" name="Changes" comment="My new research project">
+    <list default="true" id="33c695ea-78e1-44dd-a406-597587e33eb0" name="Changes" comment="add gym">
+      <change afterPath="$PROJECT_DIR$/gym-examples/agent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gym-examples/plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sshConfigs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/test_snr_simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/Matrix_version/Matrix_layered/test_snr_simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_flooding/algorithm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_flooding/codeword_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym-examples/codeword_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_flooding/justatest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_flooding/k64_n128_bg2_H_sparse.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_flooding/test_snr_simple.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/algorithm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/ber_snr_results_layered_with_multi.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/codeword_generator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/justatest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/k64_n128_bg2_H_sparse.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/llrs_snr_2.5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/plot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matrix_version/Matrix_layered/test_snr_simple.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym-examples/algorithm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/build/lib/gym_examples/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/build/lib/gym_examples/envs/SequentialEnv.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/build/lib/gym_examples/envs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/gym_examples/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym-examples/gym_examples/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/gym_examples/envs/SequentialEnv.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym-examples/gym_examples/envs/SequentialEnv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/llrs_snr_2.5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gym-examples/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/gym-examples/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +83,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python tests.Python tests in test_snr_simple.py.executor": "Run",
     "Python.BPSK.executor": "Run",
     "Python.BPSK_upgrade.executor": "Run",
     "Python.Belief-update.executor": "Run",
@@ -79,15 +104,19 @@
     "Python.ldpcSumProduct.executor": "Run",
     "Python.math.executor": "Run",
     "Python.node.executor": "Run",
+    "Python.permutaition.executor": "Run",
     "Python.plot.executor": "Run",
+    "Python.plotreward.executor": "Run",
     "Python.propagation_npyfiles.executor": "Run",
     "Python.read.executor": "Run",
     "Python.sequential.executor": "Run",
+    "Python.single_snr.executor": "Run",
     "Python.sum_product.executor": "Run",
     "Python.test.executor": "Run",
     "Python.test_simple.executor": "Run",
     "Python.test_snr.executor": "Run",
     "Python.test_snr_simple.executor": "Run",
+    "Python.test_with_buffer.executor": "Run",
     "Python.tets.executor": "Run",
     "Python.timefigure.executor": "Run",
     "Python.train.executor": "Run",
@@ -114,9 +143,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\91931\PycharmProjects\researchproject\gym-examples" />
+      <recent name="C:\Users\91931\PycharmProjects\researchproject\Matrix_version\Matrix_flooding" />
       <recent name="C:\Users\91931\PycharmProjects\researchproject\Matrix_version\gym-examples\gym_examples\wrappers" />
       <recent name="C:\Users\91931\PycharmProjects\researchproject\Matrix_version\gym-examples\gym-examples\envs" />
-      <recent name="C:\Users\91931\PycharmProjects\researchproject\Matrix_version\Matrix_flooding" />
       <recent name="C:\Users\91931\PycharmProjects\researchproject\Matrix_version\Matrix_layered" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -124,6 +153,36 @@
       <recent name="C:\Users\91931\PycharmProjects\researchproject" />
       <recent name="C:\Users\91931\PycharmProjects\researchproject\belief_propagation-main\belief_propagation" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="FA" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gym-examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gym-examples/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -166,7 +225,18 @@
       <workItem from="1718544959591" duration="2498000" />
       <workItem from="1718715056738" duration="14420000" />
       <workItem from="1718915699875" duration="5585000" />
-      <workItem from="1719152368839" duration="11929000" />
+      <workItem from="1719152368839" duration="12047000" />
+      <workItem from="1719258468943" duration="11072000" />
+      <workItem from="1719308569503" duration="30394000" />
+      <workItem from="1719864844054" duration="221000" />
+      <workItem from="1719865157188" duration="2469000" />
+      <workItem from="1719867742145" duration="233000" />
+      <workItem from="1719872561057" duration="14000" />
+      <workItem from="1719911836105" duration="1515000" />
+      <workItem from="1719949366576" duration="2299000" />
+      <workItem from="1719952130796" duration="1600000" />
+      <workItem from="1720081777561" duration="4560000" />
+      <workItem from="1720531996509" duration="15956000" />
     </task>
     <task id="LOCAL-00001" summary="BPSK_with_function">
       <option name="closed" value="true" />
@@ -280,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718917444740</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="add gym">
+      <option name="closed" value="true" />
+      <created>1719175320829</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1719175320829</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -306,21 +384,24 @@
     <MESSAGE value="use more codewords_Update" />
     <MESSAGE value="add numba" />
     <MESSAGE value="My new research project" />
-    <option name="LAST_COMMIT_MESSAGE" value="My new research project" />
+    <MESSAGE value="add gym" />
+    <option name="LAST_COMMIT_MESSAGE" value="add gym" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/researchproject$sum_product.coverage" NAME="sum_product Coverage Results" MODIFIED="1715701821238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ldpc_decoding-master" />
     <SUITE FILE_PATH="coverage/researchproject$Belief_update.coverage" NAME="Belief-update Coverage Results" MODIFIED="1715618757579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/researchproject$codeword_generator.coverage" NAME="codeword_generator Coverage Results" MODIFIED="1717531549059" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_layered" />
-    <SUITE FILE_PATH="coverage/researchproject$test_snr_simple.coverage" NAME="test_snr_simple Coverage Results" MODIFIED="1718921170837" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_layered" />
+    <SUITE FILE_PATH="coverage/researchproject$codeword_generator.coverage" NAME="codeword_generator Coverage Results" MODIFIED="1719267487408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_layered" />
+    <SUITE FILE_PATH="coverage/researchproject$test_snr_simple.coverage" NAME="test_snr_simple Coverage Results" MODIFIED="1720533934244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_layered" />
+    <SUITE FILE_PATH="coverage/researchproject$plotreward.coverage" NAME="plotreward Coverage Results" MODIFIED="1720543771264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples" />
     <SUITE FILE_PATH="coverage/researchproject$propagation_npyfiles.coverage" NAME="propagation_npyfiles Coverage Results" MODIFIED="1715802320073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/FA$BPSK.coverage" NAME="BPSK Coverage Results" MODIFIED="1714766022978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$read.coverage" NAME="read Coverage Results" MODIFIED="1716900511530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/matrix_layered/Matrix" />
     <SUITE FILE_PATH="coverage/researchproject$BPSK.coverage" NAME="BPSK Coverage Results" MODIFIED="1714766901901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1719173494613" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples/gym_examples/envs" />
     <SUITE FILE_PATH="coverage/researchproject$math.coverage" NAME="math Coverage Results" MODIFIED="1717493983609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation_layered" />
-    <SUITE FILE_PATH="coverage/researchproject$plot.coverage" NAME="plot Coverage Results" MODIFIED="1717599806838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_layered" />
+    <SUITE FILE_PATH="coverage/researchproject$plot.coverage" NAME="plot Coverage Results" MODIFIED="1720541165040" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples" />
     <SUITE FILE_PATH="coverage/researchproject$timefigure.coverage" NAME="timefigure Coverage Results" MODIFIED="1716382067146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$.coverage" NAME=" Coverage Results" MODIFIED="1719951999648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_flooding" />
     <SUITE FILE_PATH="coverage/researchproject$Beliefpropagation.coverage" NAME="Beliefpropagation Coverage Results" MODIFIED="1715621019571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$channel_models.coverage" NAME="channel_models Coverage Results" MODIFIED="1715280710357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/researchproject$agent.coverage" NAME="agent Coverage Results" MODIFIED="1718715611728" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Q-learning" />
@@ -331,15 +412,18 @@
     <SUITE FILE_PATH="coverage/researchproject$ldpcSumProduct.coverage" NAME="ldpcSumProduct Coverage Results" MODIFIED="1715621467115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/LDPC" />
     <SUITE FILE_PATH="coverage/researchproject$tets.coverage" NAME="tets Coverage Results" MODIFIED="1719158975379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/gym-examples/gym_examples/envs" />
     <SUITE FILE_PATH="coverage/researchproject$BPSK_upgrade.coverage" NAME="BPSK_upgrade Coverage Results" MODIFIED="1715293520021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/researchproject$test.coverage" NAME="test Coverage Results" MODIFIED="1719175233939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples" />
+    <SUITE FILE_PATH="coverage/researchproject$test.coverage" NAME="test Coverage Results" MODIFIED="1720552981582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples" />
     <SUITE FILE_PATH="coverage/researchproject$example_propagation.coverage" NAME="example_propagation Coverage Results" MODIFIED="1715802289942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
-    <SUITE FILE_PATH="coverage/researchproject$SequentialEnv.coverage" NAME="SequentialEnv Coverage Results" MODIFIED="1719174864483" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples/gym_examples/envs" />
+    <SUITE FILE_PATH="coverage/researchproject$SequentialEnv.coverage" NAME="SequentialEnv Coverage Results" MODIFIED="1720544074177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples/gym_examples/envs" />
     <SUITE FILE_PATH="coverage/researchproject$windowed_dec.coverage" NAME="windowed_dec Coverage Results" MODIFIED="1715635674854" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ldpc_decoding-master" />
+    <SUITE FILE_PATH="coverage/researchproject$single_snr.coverage" NAME="single_snr Coverage Results" MODIFIED="1720536169142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_flooding" />
     <SUITE FILE_PATH="coverage/researchproject$algorithm.coverage" NAME="algorithm Coverage Results" MODIFIED="1716910784524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/matrix_layered/Matrix" />
     <SUITE FILE_PATH="coverage/researchproject$test_simple.coverage" NAME="test_simple Coverage Results" MODIFIED="1716457348872" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
+    <SUITE FILE_PATH="coverage/researchproject$test_with_buffer.coverage" NAME="test_with_buffer Coverage Results" MODIFIED="1720538863180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-examples" />
     <SUITE FILE_PATH="coverage/researchproject$graph_example.coverage" NAME="graph_example Coverage Results" MODIFIED="1715718426147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation" />
     <SUITE FILE_PATH="coverage/researchproject$vscode.coverage" NAME="vscode Coverage Results" MODIFIED="1716476623810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation_numba" />
     <SUITE FILE_PATH="coverage/researchproject$justatest.coverage" NAME="justatest Coverage Results" MODIFIED="1717511580860" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/Matrix_flooding" />
+    <SUITE FILE_PATH="coverage/researchproject$permutaition.coverage" NAME="permutaition Coverage Results" MODIFIED="1720532979221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/researchproject$generate_codeword.coverage" NAME="generate_codeword Coverage Results" MODIFIED="1716390591540" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/belief_propagation-main/belief_propagation_numba" />
     <SUITE FILE_PATH="coverage/researchproject$sequential.coverage" NAME="sequential Coverage Results" MODIFIED="1719158963150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Matrix_version/gym-examples/gym_examples/envs" />
     <SUITE FILE_PATH="coverage/FA$test.coverage" NAME="test Coverage Results" MODIFIED="1714751133171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

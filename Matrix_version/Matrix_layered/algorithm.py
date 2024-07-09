@@ -15,8 +15,6 @@ class BeliefPropagation:
     def __init__(self, h: coo_matrix, max_iter: int, sequence: list[int]):
         if isinstance(h, np.ndarray):
             self.H = csr_matrix(h)
-        elif isinstance(h, coo_matrix):
-            self.H = csr_matrix(h)
         else:
             self.H = h
         self.max_iter = max_iter
@@ -30,29 +28,32 @@ class BeliefPropagation:
         # print(f"Message: {message}")
         return message
 
-    #process specific_nodes
-    def decode(self, channel_llr: NDArray, specific_cnodes: list[int] = None) -> tuple[NDArray, NDArray, bool]:
+
+    def decode(self, channel_llr: NDArray) -> tuple[NDArray, NDArray, bool]:
         if len(channel_llr) != self.num_vnodes:
-            raise ValueError("Incorrect block size")
+            raise ValueError("incorrect block size")
+
+        # Initial step
         llr = np.array(channel_llr, dtype=float)
         messages = np.zeros((self.num_cnodes, self.num_vnodes))
-        specific_cnodes = specific_cnodes
-        residuals = np.zeros((self.num_cnodes, self.num_vnodes))
 
+        # Perform the decoding process according to the specified sequence
         for iteration in range(self.max_iter):
-            for i in specific_cnodes:
-                indices = self.H[i].indices# variable nodes that connected to the specific check nodes
+            # print(f"Iteration {iteration + 1}")
+            for i in self.sequence:
+                indices = self.H[i].indices
+                # print(f"Processing CNode {i} with connected VNodes {indices}")
                 for j in indices:
                     new_message = self.compute_message(llr, indices, j)
-                    message_diff = new_message - messages[i, j]
-                    residuals[i, j] = np.abs(message_diff)
-                    llr[j] += message_diff
-                    messages[i, j] = new_message
+                    llr[j] += new_message - messages[i, j]
+                    # print(f"Update LLR {llr}")# Update LLR by adding new and subtracting old message
+                    messages[i, j] = new_message  # Store new message
 
+            # print(f"LLR after iteration {iteration + 1}: {llr}")
             estimate = np.array([1 if llr < 0 else 0 for llr in llr])
             syndrome = self.H.dot(estimate) % 2
             if not syndrome.any():
                 break
 
-        return llr, residuals, estimate
+        return estimate, llr, not syndrome.any()
 

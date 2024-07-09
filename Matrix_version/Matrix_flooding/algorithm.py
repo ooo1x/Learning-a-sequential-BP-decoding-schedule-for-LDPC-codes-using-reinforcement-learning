@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.typing import NDArray
 from scipy.sparse import coo_matrix, csr_matrix
 import time
 from numba import jit
@@ -11,48 +10,52 @@ def calculate_tanh_product(messages: np.ndarray) -> float:
     safe_product_tanh = np.clip(np.array([product_tanh]), -0.999999, 0.999999)[0]
     return 2 * np.arctanh(safe_product_tanh)
 
+
 class BeliefPropagation:
-    def __init__(self, h: coo_matrix, max_iter: int, sequence: list[int]):
+    def __init__(self, h: coo_matrix, max_iter: int):
         if isinstance(h, np.ndarray):
-            self.H = csr_matrix(h)
-        elif isinstance(h, coo_matrix):
             self.H = csr_matrix(h)
         else:
             self.H = h
         self.max_iter = max_iter
-        self.sequence = sequence
+        # self.sequence = sequence
         self.num_vnodes = self.H.shape[1]
         self.num_cnodes = self.H.shape[0]
-
     def compute_message(self, llr, indices, variable_index):
         other_indices = np.array([idx for idx in indices if idx != variable_index], dtype=np.int32)
         message = calculate_tanh_product(llr[other_indices])
         # print(f"Message: {message}")
         return message
 
-    #process specific_nodes
-    def decode(self, channel_llr: NDArray, specific_cnodes: list[int] = None) -> tuple[NDArray, NDArray, bool]:
+    def decode(self, channel_llr: np.ndarray) -> tuple[np.ndarray, np.ndarray, bool]:
         if len(channel_llr) != self.num_vnodes:
-            raise ValueError("Incorrect block size")
+            raise ValueError("incorrect block size")
+
+        # Initial step
         llr = np.array(channel_llr, dtype=float)
         messages = np.zeros((self.num_cnodes, self.num_vnodes))
-        specific_cnodes = specific_cnodes
-        residuals = np.zeros((self.num_cnodes, self.num_vnodes))
 
+        # Perform the decoding process
         for iteration in range(self.max_iter):
-            for i in specific_cnodes:
-                indices = self.H[i].indices# variable nodes that connected to the specific check nodes
+            # print(f"Iteration {iteration + 1}")
+            new_messages = np.zeros_like(messages)
+            # Compute all new messages
+            for i in range(self.num_cnodes):
+                indices = self.H[i].indices
                 for j in indices:
-                    new_message = self.compute_message(llr, indices, j)
-                    message_diff = new_message - messages[i, j]
-                    residuals[i, j] = np.abs(message_diff)
-                    llr[j] += message_diff
-                    messages[i, j] = new_message
+                    new_messages[i, j] = self.compute_message(llr, indices, j)
 
-            estimate = np.array([1 if llr < 0 else 0 for llr in llr])
+            # Update LLRs
+            for i in range(self.num_cnodes):
+                indices = self.H[i].indices
+                for j in indices:
+                    llr[j] += new_messages[i, j] - messages[i, j]
+                messages[i] = new_messages[i]
+
+            # print(f"LLR after iteration {iteration + 1}: {llr}")
+            estimate = np.array([1 if l < 0 else 0 for l in llr])
             syndrome = self.H.dot(estimate) % 2
             if not syndrome.any():
                 break
 
-        return llr, residuals, estimate
-
+        return estimate, llr, not syndrome.any()

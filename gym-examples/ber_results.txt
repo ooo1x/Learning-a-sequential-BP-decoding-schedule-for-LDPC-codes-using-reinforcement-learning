@@ -1,0 +1,1 @@
+snr_db: 0.5 Average BER: 0.0

@@ -6,7 +6,7 @@
       <paths name="root@localhost:12345 password">
         <serverdata>
           <mappings>
-            <mapping deploy="/root/yixuan" local="$PROJECT_DIR$" />
+            <mapping deploy="/tmp/pycharm_project_29" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
