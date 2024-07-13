@@ -71,8 +71,8 @@ def main():
     writer = SummaryWriter('runs/exp')
     start_time = time.time()
     # Initialize the environment
-    H = np.array([[1, 1, 0, 1, 1, 0, 0], [1, 0, 1, 1, 0, 1, 0], [0, 1, 1, 1, 0, 0, 1]])
-    snr_db = 0.5
+    H = np.array([[1, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 1, 1], [0, 0, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 1]])
+    snr_db = 1.5
     env = gym.make('gym_examples/SequentialEnv-v0', H = H, snr_db = snr_db)
 
     # Initialize the agent

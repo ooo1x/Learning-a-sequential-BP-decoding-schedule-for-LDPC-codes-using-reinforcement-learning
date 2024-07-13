@@ -4,6 +4,7 @@ import time
 from scipy.sparse import coo_matrix
 from multiprocessing import Pool, cpu_count
 from codeword_generator import generate_random_codewords, h2g, row_rank
+import itertools
 
 def awgn_llr(sigma, received_codeword):
     return 2 * received_codeword / (sigma ** 2)
@@ -26,7 +27,7 @@ def simulate_awgn_bpsk_transmission(args):
     # print(f"Sequence of c-node indices for message passing: {sequence}")
 
     eb_n0_linear = 10 ** (eb_n0_db / 10)
-    print(f"Currently processing Eb/N0: {eb_n0_db} dB")
+    print(f"Currently processing sequence: {sequence}")
 
     for idx, original_codeword in enumerate(original_codeword):
         # print(f"Processing codeword {original_codeword}")
@@ -67,17 +68,17 @@ def simulate_awgn_bpsk_transmission(args):
     with open(f"llrs_snr_{eb_n0_db}.txt", 'w') as f:
         for llr in all_channel_llrs:
             f.write(' '.join(map(str, llr)) + '\n')
-    return eb_n0_db, average_ber, average_bler, total_duration
+    return sequence, average_ber, average_bler, total_duration
 
 
 def main():
     start_time_all = time.perf_counter()
     # H = load_sparse_matrix('k64_n128_bg2_H_sparse.npy')
     # H = H.toarray().astype(np.uint8)
-    H = np.array([[1, 1, 0, 1, 1, 0, 0], [1, 0, 1, 1, 0, 1, 0], [0, 1, 1, 1, 0, 0, 1]])
+    H = np.array([[1, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 1, 1], [0, 0, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 1]], dtype=np.uint8)
     rows, cols = np.where(H == 1)
     values = np.ones(len(rows))
-    H = coo_matrix((values, (rows, cols)), shape=(3, 7)).toarray()
+    H = coo_matrix((values, (rows, cols)), shape=(4, 7)).toarray().astype(np.uint8)
     # Codewords
     # original_codeword = np.loadtxt("hamming_codewords.txt")*0
     # original_codeword = np.loadtxt("k64_codewords.txt") * 0
@@ -88,32 +89,39 @@ def main():
     # rank_H = row_rank(H)
     # print("Rank of G:", rank_G)
     # print("Rank of H:", rank_H)
-    original_codeword = generate_random_codewords(G)*0
+    original_codeword = generate_random_codewords(G)
     #original_codeword = original_codeword[np.random.choice(original_codeword.shape[0], 4, replace=False), :]
     # print("selected_codewords:", selected_codewords)
 
     # Define SNR range in dB
-    eb_n0_db_range = np.ones(8)*1.5#np.arange(0, 3, 0.5)
+    eb_n0_db = 1.5
     max_iter = 3
     num_trials = 1000
-    sequence = [0, 1, 2]
+    sequences = list(itertools.permutations([0, 1, 2, 3]))
 
-    args = [(H, original_codeword, db, max_iter, num_trials, sequence) for db in eb_n0_db_range]
+    args = [(H, original_codeword, eb_n0_db, max_iter, num_trials, seq) for seq in sequences]
     with Pool(processes=cpu_count()) as pool:
         results = pool.map(simulate_awgn_bpsk_transmission, args)
 
-    ber_values = []
-    runtime_data = []
-    bler_values = []
-
-    with open(f"ber_and_bler_seq_{'_'.join(map(str, sequence))}.txt", 'w') as f:
+    with open("ber_snr_results_sequences.txt", 'w') as f:
         for result in results:
-            eb_n0_db, average_ber, average_bler, total_duration = result
-            ber_values.append(average_ber)
-            bler_values.append(average_bler)
-            runtime_data.append(total_duration)
-            f.write(f"{eb_n0_db} {average_ber} {average_bler} {total_duration:.2f}\n")
+            sequence, average_ber, average_bler, total_duration = result
+            f.write(f"Sequence: {sequence}, Average BER: {average_ber}, Average BLER: {average_bler}, Duration: {total_duration:.2f} seconds\n")
 
+    print("Results written to 'ber_snr_results_sequences.txt'.")
+
+    # ber_values = []
+    # runtime_data = []
+    # bler_values = []
+    #
+    # with open(f"ber_and_bler_seq_{'_'.join(map(str, sequence))}.txt", 'w') as f:
+    #     for result in results:
+    #         eb_n0_db, average_ber, average_bler, total_duration = result
+    #         ber_values.append(average_ber)
+    #         bler_values.append(average_bler)
+    #         runtime_data.append(total_duration)
+    #         f.write(f"{eb_n0_db} {average_ber} {average_bler} {total_duration:.2f}\n")
+    #
     end_time_all = time.perf_counter()
     total_duration_program = end_time_all - start_time_all
     print(f"Total runtime of the program: {total_duration_program:.2f} seconds")

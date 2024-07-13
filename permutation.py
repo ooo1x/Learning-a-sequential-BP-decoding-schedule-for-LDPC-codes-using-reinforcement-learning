@@ -1,6 +1,6 @@
 import itertools
 
-s = '012'
+s = '0124'
 
 permutations = list(itertools.permutations(s))
 

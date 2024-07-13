@@ -7,7 +7,7 @@ from datetime import datetime
 from codeword_generator import generate_random_codewords, h2g, row_rank
 
 class SequentialEnv(gym.Env):
-    def __init__(self, H, snr_db, max_iter=10, sequence=None):
+    def __init__(self, H, snr_db, max_iter=3, sequence=None):
         print("SequentialEnv init...")
         super(SequentialEnv, self).__init__()
         self.H = H
