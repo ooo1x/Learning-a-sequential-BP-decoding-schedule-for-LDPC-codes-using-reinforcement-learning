@@ -8,7 +8,12 @@ from ray.rllib.utils.replay_buffers import ReplayBuffer
 from ray.rllib.utils.replay_buffers.replay_buffer import StorageUnit
 from ray.rllib.policy.sample_batch import SampleBatch
 from torch.utils.tensorboard import SummaryWriter
+import logging
 
+# logging.basicConfig(filename='training_log.log',
+#                     level=logging.INFO,
+#                     format='%(asctime)s - %(levelname)s - %(message)s',
+#                     datefmt='%Y-%m-%d %H:%M:%S')
 
 def print_buffer(buffer):
     print("Buffer contains:")
@@ -16,7 +21,8 @@ def print_buffer(buffer):
         print(f"Sample {idx}:")
         for key, value in sample.items():
             print(f"  {key}: {value}")
-def run_episode(env, agent, buffer, batch_size = 1000, render=False):
+
+def run_episode(env, agent, buffer, batch_size = 128, render=False):
     total_reward = 0
     obs, info = env.reset()  # Unpack the tuple to get the initial state and info
     done = False
@@ -40,31 +46,27 @@ def run_episode(env, agent, buffer, batch_size = 1000, render=False):
 
 def test_episode(env, agent):
     total_reward = 0
-    obs, info = env.reset()
-    done = False
+    obs, info = env.reset()  # Reset environment at the start of each episode
     ber_list = []
-    step_counter = 0 
+    done = False
     while not done:
-        action = agent.predict(obs)  # greedy
+        action = agent.predict(obs)
         next_obs, reward, done, truncated, info = env.step(action)
         total_reward += reward
 
         # Calculate and collect BER
         original_codeword = env.unwrapped.original_codeword
-        estimate = info['estimate']  # Get the estimate from step info
-        num_errors = np.sum(original_codeword != estimate)
+        estimate = info['estimate']
+        num_errors = np.sum(np.logical_xor(original_codeword, estimate))
         ber = num_errors / len(original_codeword)
         ber_list.append(ber)
 
         obs = next_obs
-        if done:
-            print('Test reward = %.1f' % total_reward)
-            print('Average BER = %f' % np.mean(ber_list))
-            # Write BER results to file
-            with open("ber_results.txt", "a") as file:
-                 file.write(f"snr_db: {env.unwrapped.snr_db} Average BER: {np.mean(ber_list)}\n")
 
-            break
+    average_ber = np.mean(ber_list)
+    return total_reward, average_ber
+
+
 def main():
     writer = SummaryWriter('runs/exp')
     start_time = time.time()
@@ -76,13 +78,13 @@ def main():
     # Initialize the agent
     obs_n = 2 ** H.shape[0]  # Update this based on state size calculation
     act_n = H.shape[0]  # Number of actions in environment
-    agent = QLearningAgent(obs_n=obs_n, act_n=act_n, learning_rate=0.1, gamma=0.9, e_greed=0.6)
+    agent = QLearningAgent(obs_n=obs_n, act_n=act_n, learning_rate=1e-1, gamma=0.9, e_greed=0.6)
 
     # Initialize replay buffer
     buffer = ReplayBuffer(capacity=10000, storage_unit=StorageUnit.TIMESTEPS)
 
     # Run episodes
-    for episode in range(100):
+    for episode in range(100000):
         reward = run_episode(env, agent, buffer, render=False)
         print(f"Episode {episode}: Reward: {reward}")
         writer.add_scalar("Rewards", reward, episode)
@@ -92,10 +94,22 @@ def main():
 
     # Save the learned Q-table
     agent.save()
-    test_episode(env, agent)
+
+    # Define lists to hold cumulative rewards and BERs for all episodes
+    total_test_rewards = []
+    all_ber_list = []# List to store total rewards for each episode
+
+    # Test
+    for episode in range(20000):
+        reward, average_ber = test_episode(env, agent)
+        total_test_rewards.append(reward)
+        all_ber_list.append(average_ber)
+        #print(f"Episode {episode + 1}: Reward = {reward}, Average BER = {average_ber}")
+
+    overall_average_ber = np.mean(all_ber_list)
+    print(f"Overall Average BER {snr_db} across all episodes: {overall_average_ber}")
     env.close()
     writer.close()
 
 if __name__ == "__main__":
     main()
-    

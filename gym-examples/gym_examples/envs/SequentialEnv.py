@@ -7,7 +7,7 @@ from datetime import datetime
 from codeword_generator import generate_random_codewords, h2g, row_rank
 
 class SequentialEnv(gym.Env):
-    def __init__(self, H, snr_db, max_iter=3, sequence=None):
+    def __init__(self, H, snr_db, max_iter=10, sequence=None):
         print("SequentialEnv init...")
         super(SequentialEnv, self).__init__()
         self.H = H
@@ -40,11 +40,10 @@ class SequentialEnv(gym.Env):
 
     def _generate_llr(self):
         self.original_codeword = generate_random_codewords(self.G, 1)[0]
-        # print("Original codeword: ", self.original_codeword)
         transmitted_codeword = 1 - 2 * self.original_codeword
         snr_linear = 10 ** (self.snr_db / 10)
         sigma = np.sqrt(1 / (2 * snr_linear))
-        received_codeword = transmitted_codeword + sigma * np.random.randn(len(self.original_codeword))#add noise
+        received_codeword = transmitted_codeword + sigma * np.random.randn(len(self.original_codeword))
         self.llr = 2 * received_codeword / (sigma ** 2)#awgn channel
         # print("generated llr", self.llr)
 
@@ -56,13 +55,13 @@ class SequentialEnv(gym.Env):
 
     def step(self, action):
         selected_cn_indices = [self.sequence[action]]
-        updated_llr, residuals, estimate= self.bp_decoder.decode(self.llr, selected_cn_indices)
+        updated_llr, residuals, estimate = self.bp_decoder.decode(self.llr, selected_cn_indices)
         reward = self._compute_reward(residuals)
         self.state = self._get_state(updated_llr)
         info = {'estimate': estimate}
         done = False  
         truncated = False  
-        if self.current_step >= 100:  # max_step in one episode
+        if self.current_step >= 25 -1:  # max_step in one episode
             done = True
             truncated = False
         self.current_step += 1
