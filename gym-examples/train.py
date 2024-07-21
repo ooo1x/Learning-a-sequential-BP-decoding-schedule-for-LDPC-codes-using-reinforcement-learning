@@ -10,9 +10,14 @@ from ray.rllib.policy.sample_batch import SampleBatch
 from torch.utils.tensorboard import SummaryWriter
 import logging
 
+def print_buffer(buffer):
+    print("Buffer contains:")
+    for idx, sample in enumerate(buffer._storage):
+        print(f"Sample {idx}:")
+        for key, value in sample.items():
+            print(f"  {key}: {value}")
 
-def run_episode(env, agent, buffer, batch_size = 128, render=False):
-    total_reward = 0
+def run_episode(env, agent, buffer, batch_size = 64, render=False):
     obs, info = env.reset()  # Unpack the tuple to get the initial state and info
     done = False
     while not done:
@@ -30,8 +35,7 @@ def run_episode(env, agent, buffer, batch_size = 128, render=False):
             agent.learn_on_batch(batch)
 
         obs = next_obs  # Update the current state to the next one
-        total_reward += reward
-    return total_reward
+    return reward
 
 def test_episode(env, agent):
     total_reward = 0
@@ -49,7 +53,6 @@ def test_episode(env, agent):
     estimate = info['estimate']
     num_errors = np.sum(np.logical_xor(original_codeword, estimate))
     ber = num_errors / len(original_codeword)
-    print("BER:", ber)
     ber_list.append(ber)
 
     return total_reward, ber
@@ -66,21 +69,24 @@ def main():
     # Initialize the agent
     obs_n = 2 ** H.shape[0]  # Update this based on state size calculation
     act_n = H.shape[0]  # Number of actions in environment
-    agent = QLearningAgent(obs_n=obs_n, act_n=act_n, learning_rate=1e-1, gamma=0.9, e_greed=0.6)
+    agent = QLearningAgent(obs_n=obs_n, act_n=act_n, learning_rate=1e-1, gamma=0.9, e_greed=0.9)
+    agent.restore('q_table.npy')
 
-    # Define lists to hold cumulative rewards and BERs for all episodes
-    total_test_rewards = []
-    all_ber_list = []# List to store total rewards for each episode
+    # Initialize replay buffer
+    buffer = ReplayBuffer(capacity=10000, storage_unit=StorageUnit.TIMESTEPS)
 
-    # Test
-    for episode in range(1000):
-        print("Episode:", episode)
-        reward, ber = test_episode(env, agent)
-        total_test_rewards.append(reward)
-        all_ber_list.append(ber)
+    # Run episodes
+    for episode in range(10000):
+        reward = run_episode(env, agent, buffer, render=False)
+        print(f"Episode {episode}: Reward: {reward}")
+        writer.add_scalar("Rewards", reward, episode)
 
-    overall_average_ber = np.mean(all_ber_list)
-    print(f"Overall Average BER {snr_db} across all episodes: {overall_average_ber}")
+    total_duration = time.time() - start_time  # Total duration for all episodes
+    print(f"Total duration: {total_duration:.1f} s")
+
+    # Save the learned Q-table
+    agent.save()
+
     env.close()
     writer.close()
 

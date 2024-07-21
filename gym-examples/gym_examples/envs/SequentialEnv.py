@@ -5,6 +5,7 @@ from algorithm import BeliefPropagation
 import logging
 from datetime import datetime
 from codeword_generator import generate_random_codewords, h2g, row_rank
+import random
 
 class SequentialEnv(gym.Env):
     def __init__(self, H, snr_db, max_iter=3, sequence=None):
@@ -20,6 +21,7 @@ class SequentialEnv(gym.Env):
         self.original_codeword = None
         self.observation_space = spaces.Discrete(2 ** H.shape[0]) #state 000,001,010,100,101,110,111
         self.action_space = spaces.Discrete(H.shape[0])#action 0,1,2
+        self.cn_updated = np.zeros(H.shape[0], dtype=bool) # Tracks whether each CN has been updated
 
         current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
         log_filename = f"log_{current_time}.log"
@@ -36,13 +38,17 @@ class SequentialEnv(gym.Env):
         self.current_step = 0
         self._generate_llr() 
         self.state = self._get_state(self.llr)
+        self.cn_updated.fill(False)  # Reset the update status for each check node
         return self.state, {}
 
     def _generate_llr(self):
-        self.original_codeword = generate_random_codewords(self.G, 1)[0]
+        original_codeword = generate_random_codewords(self.G)
+        self.original_codeword = random.choice(original_codeword)
         transmitted_codeword = 1 - 2 * self.original_codeword
         snr_linear = 10 ** (self.snr_db / 10)
-        sigma = np.sqrt(1 / (2 * snr_linear))
+        Eb = 1
+        N0 = Eb / snr_linear
+        sigma = np.sqrt(N0 / 2)
         received_codeword = transmitted_codeword + sigma * np.random.randn(len(self.original_codeword))
         self.llr = 2 * received_codeword / (sigma ** 2)#awgn channel
         # print("generated llr", self.llr)
@@ -57,20 +63,27 @@ class SequentialEnv(gym.Env):
         selected_cn_indices = [self.sequence[action]]
         updated_llr, residuals, estimate = self.bp_decoder.decode(self.llr, selected_cn_indices)
         reward = self._compute_reward(residuals)
+        # Mark the selected check nodes as updated
+        for idx in selected_cn_indices:
+            self.cn_updated[idx] = True
+
+        # Check if all check nodes have been updated
+        done = np.all(self.cn_updated) or self.current_step >= 24
+        if done:
+            # If all check nodes have been updated, reset for next round
+            self.cn_updated.fill(False)  # Reset for the next set of updates
+
         self.state = self._get_state(updated_llr)
         info = {'estimate': estimate}
-        done = False  
         truncated = False  
-        if self.current_step >= 25 -1:  # max_step in one episode
-            done = True
-            truncated = False
-        self.current_step += 1
-        logging.info(f"Step: {self.current_step}, Action: {action}, Reward: {reward}, State: {self.state}")
-        return self.state, reward, done, truncated, info
 
+        self.current_step += 1
+        logging.info(f"Step: {self.current_step}, Action: {action}, Reward: {reward}, State: {self.state}, Done: {done}")
+        return self.state, reward, done, truncated, info
+    
     def _compute_reward(self, residuals):
         max_residual = np.max(residuals)
-        return  max_residual
+        return max_residual
 #different reward function
 
     def render(self):

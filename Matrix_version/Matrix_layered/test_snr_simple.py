@@ -89,14 +89,14 @@ def main():
     # rank_H = row_rank(H)
     # print("Rank of G:", rank_G)
     # print("Rank of H:", rank_H)
-    original_codeword = generate_random_codewords(G)
+    original_codeword = generate_random_codewords(G, 10000)
     #original_codeword = original_codeword[np.random.choice(original_codeword.shape[0], 4, replace=False), :]
     # print("selected_codewords:", selected_codewords)
 
     # Define SNR range in dB
     eb_n0_db = 1.5
-    max_iter = 3
-    num_trials = 1000
+    max_iter = 1
+    num_trials = 100
     sequences = list(itertools.permutations([0, 1, 2, 3]))
 
     args = [(H, original_codeword, eb_n0_db, max_iter, num_trials, seq) for seq in sequences]

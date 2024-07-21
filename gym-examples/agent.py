@@ -15,7 +15,7 @@ class QLearningAgent(object):
         if np.random.uniform(0, 1) < (1.0 - self.epsilon):
             action = self.predict(state)
         else:
-            action = np.random.choice(self.act_n)
+            action = np.random.choice(self.act_n)#only once!
         return action
 
     def predict(self, obs):
