@@ -53,7 +53,7 @@ def h2g(hp):
     g = np.hstack([np.eye(k, dtype=np.uint8), h[:, :k].T])
     return g
 
-def generate_random_codewords(G, num_codewords=100):
+def generate_random_codewords(G, num_codewords):
     k = G.shape[0]
     info_bits = np.random.randint(0, 2, (num_codewords, k))
     codewords = (info_bits @ G) % 2

@@ -42,10 +42,10 @@ def main():
     G = h2g(H)
     check = np.dot(G, H.T) % 2
     print("Check H*G^T = 0:", np.all(check == 0))
-    original_codeword = generate_random_codewords(G, 1000000) # 100 codewords
+    original_codeword = generate_random_codewords(G, 10000) # 100 codewords
 
     # Define SNR range in dB
-    eb_n0_db = 0.5
+    eb_n0_db = 2
     sequences = list(itertools.permutations([0, 1, 2, 3]))
     all_codewords_sequence_ber = {seq: [] for seq in sequences}
     min_ber_list =[]
