@@ -11,6 +11,9 @@ class QLearningAgent(object):
         self.Q = np.zeros((obs_n, act_n))
         self.available_actions = np.ones(act_n, dtype=bool)
 
+    def set_exploration(self, e_greed):
+        self.epsilon = e_greed
+
     def reset_episode(self):
         self.available_actions.fill(True)
 

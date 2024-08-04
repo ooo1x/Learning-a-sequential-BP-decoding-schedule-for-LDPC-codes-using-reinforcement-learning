@@ -73,6 +73,7 @@ class SequentialEnv(gym.Env):
             self._generate_llr()
         self.current_llr, residuals = self.bp_decoder.decode(self.current_llr, self.sequence[action])
         reward = self._compute_reward(residuals)
+        print("REWARD", reward)
         self.cn_updated[action] = True
         done = np.all(self.cn_updated)
         info = {}
