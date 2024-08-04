@@ -42,10 +42,10 @@ def main():
     G = h2g(H)
     check = np.dot(G, H.T) % 2
     print("Check H*G^T = 0:", np.all(check == 0))
-    original_codeword = generate_random_codewords(G, 10000) # 100 codewords
+    original_codeword = generate_random_codewords(G) # 100 codewords
 
     # Define SNR range in dB
-    eb_n0_db = 2
+    eb_n0_db = 0
     sequences = list(itertools.permutations([0, 1, 2, 3]))
     all_codewords_sequence_ber = {seq: [] for seq in sequences}
     min_ber_list =[]
@@ -66,18 +66,26 @@ def main():
     #
     # print(f"Best overall sequence: {best_sequence}, with average BER: {best_avg_ber}")
 
-    for codeword in original_codeword:
+    error_counter = 0
+    total_bits = 0
+
+    while error_counter < 1000:
+        print(error_counter)
+        codeword = generate_random_codewords(G)
         min_ber = simulate_awgn_bpsk_transmission(H, codeword, eb_n0_db, sequences)
-        min_ber_list.append(min_ber)
+        errors_in_this_codeword = min_ber * len(codeword)
+        error_counter += errors_in_this_codeword
+        total_bits += len(codeword)
 
-     # Output the global minimum BER
-    global_min_ber = np.mean(min_ber_list)
+    ber = error_counter / total_bits
+    print(f"Total bit errors: {error_counter}, Total bits transmitted: {total_bits}, BER: {ber}")
+    with open("ber_results.txt", "a") as file:
+        file.write(
+            f"SNR (dB): {eb_n0_db}, Total bit errors: {error_counter}, Total bits transmitted: {total_bits}, BER: {ber}\n")
 
-    # Write the results to a file
-    with open("sequence_dynamic.txt", "a") as file:
-        file.write(f"SNR (dB): {eb_n0_db}, Global minimum BER: {global_min_ber}\n")
+    end_time_all = time.perf_counter()
+    print(f"Total simulation time: {end_time_all - start_time_all} seconds")
 
 
 if __name__ == "__main__":
     main()
-

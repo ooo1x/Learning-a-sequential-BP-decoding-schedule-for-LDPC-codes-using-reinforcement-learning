@@ -2,7 +2,6 @@ import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
 from algorithm import BeliefPropagation
-import logging
 from datetime import datetime
 from codeword_generator import generate_random_codewords, h2g
 import random
@@ -33,12 +32,6 @@ class SequentialEnv(gym.Env):
         self.step_counter = 0 #use it to control channel_llr
         self.messages = np.zeros((self.H.shape[0], self.H.shape[1]))
 
-        current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_filename = f"log_{current_time}.log"
-        logging.basicConfig(filename=log_filename,
-                            filemode='w',
-                            level=logging.INFO,
-                            format='%(asctime)s - %(levelname)s - %(message)s')
     def seed(self, seed=None):
         np.random.seed(seed)
         return [seed]
@@ -55,7 +48,6 @@ class SequentialEnv(gym.Env):
     def generate_initial_codeword(self):
         original_codewords = generate_random_codewords(self.G, 1)
         self.original_codeword = random.choice(original_codewords)
-        print("Original Codeword: ", self.original_codeword)
 
     def _generate_llr(self):
         transmitted_codeword = 1 - 2 * self.original_codeword
@@ -77,18 +69,10 @@ class SequentialEnv(gym.Env):
     def step(self, action):
         if self.cn_updated[action]:
             return self.state, 0, False, False, {'msg': 'Action already taken'}
-        selected_cn_indices = self.sequence[action]
         if self.step_counter % 4 == 0:
             self._generate_llr()
-
-        print(f"channel llr: {self.channel_llr}")
-        print(f"Action selected: {selected_cn_indices}")
         self.current_llr, residuals = self.bp_decoder.decode(self.current_llr, self.sequence[action])
-        print(f"Updated llr: {self.current_llr}")
-
-
         reward = self._compute_reward(residuals)
-        print(f"Reward: {reward}")
         self.cn_updated[action] = True
         done = np.all(self.cn_updated)
         info = {}
@@ -96,18 +80,15 @@ class SequentialEnv(gym.Env):
             # If all check nodes have been updated, reset for next round
             estimate = np.array([1 if x < 0 else 0 for x in self.current_llr])
             info = {'estimate': estimate}
-            print("Estimate: ", estimate)
             self.cn_updated.fill(False)  # Reset for the next set of updates
 
         self.state = self._get_state(self.current_llr)
-        print(f"state: {self.state}")
-        truncated = False  
+        truncated = False
 
         self.current_step += 1
         self.step_counter += 1
-        logging.info(f"Step: {self.current_step}, Action: {action}, Reward: {reward}, State: {self.state}, Done: {done}")
         return self.state, reward, done, truncated, info
-    
+
     def _compute_reward(self, residuals):
         max_residual = np.max(residuals)
         return max_residual

@@ -30,6 +30,7 @@ class BeliefPropagation:
 
 
     def decode(self, channel_llr: NDArray) -> tuple[NDArray, NDArray, bool]:
+        print(f"channel llr: {channel_llr}")
         if len(channel_llr) != self.num_vnodes:
             raise ValueError("incorrect block size")
 
@@ -45,16 +46,31 @@ class BeliefPropagation:
                 # print(f"Processing CNode {i} with connected VNodes {indices}")
                 for j in indices:
                     new_message = self.compute_message(llr, indices, j)
-                    residual = np.abs(new_message - messages[i, j])
                     llr[j] += new_message - messages[i, j]
-                    print(f"residual {residual}")# Update LLR by adding new and subtracting old message
+                    print(f"iteration {iteration}, message {new_message}, llr {llr}, j{j}")
+                    # print(f"Update LLR {llr}")# Update LLR by adding new and subtracting old message
                     messages[i, j] = new_message  # Store new message
+                    print(f"message {messages[i, j]}")
 
             # print(f"LLR after iteration {iteration + 1}: {llr}")
             estimate = np.array([1 if llr < 0 else 0 for llr in llr])
             syndrome = self.H.dot(estimate) % 2
-            if not syndrome.any():
-                break
+
 
         return estimate, llr, not syndrome.any()
 
+H = np.array([[1, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 1, 1], [0, 0, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 1]], dtype=np.uint8)
+original_codeword =[1, 0 ,1, 0 ,1, 0 ,1]
+
+
+
+
+channel_llr= [-0.58957432,  1.76435542, -5.51315037 , 2.38436218 ,-6.65667606, 11.08284505,
+ -6.38536211]
+
+
+
+sequence = [3,0,1,2]
+bp = BeliefPropagation(H, max_iter=1, sequence=sequence)
+estimate, llr, decode_success = bp.decode(channel_llr)
+print(f"estimate: {estimate}, llr: {llr}, decode_success: {decode_success}")

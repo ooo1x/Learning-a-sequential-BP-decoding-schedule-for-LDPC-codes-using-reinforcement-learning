@@ -94,8 +94,8 @@ def main():
     # print("selected_codewords:", selected_codewords)
 
     # Define SNR range in dB
-    eb_n0_db = np.ones(8) * 1.5
-    max_iter = 3
+    eb_n0_db = np.ones(8) * 2
+    max_iter = 1
     num_trials = 1000
 
     args = [(H, original_codeword, db, max_iter, num_trials) for db in eb_n0_db]
