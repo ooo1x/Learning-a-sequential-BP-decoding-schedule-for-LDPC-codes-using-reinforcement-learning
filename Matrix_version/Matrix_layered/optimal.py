@@ -54,19 +54,23 @@ def main():
     values = np.ones(len(rows))
     H = coo_matrix((values, (rows, cols)), shape=(4, 7)).toarray().astype(np.uint8)
 
-    snr_values = [0, 0.5, 1, 1.5, 2]
+    snr = 2
     max_iter = 1
-    sequence = [0,1,2,3]
+    sequence = list(itertools.permutations([0, 1, 2, 3]))
 
     pool = Pool(processes=cpu_count())
-    results = pool.map(simulate_awgn_bpsk_transmission, [(H, snr, max_iter, sequence) for snr in snr_values])
+    results = pool.map(simulate_awgn_bpsk_transmission, [(H, snr, max_iter, sequence) for sequence in sequence])
     pool.close()
     pool.join()
 
 
     for result in results:
         eb_n0_db, total_errors, total_bits, ber = result
-        print(f"SNR: {eb_n0_db} dB, BER: {ber}\n")
+        print(f"BER: {ber}\n")
+
+    min_ber = min(result[3] for result in results)
+    print(f"Minimum BER across all sequences: {min_ber}")
+
 
 
     end_time_all = time.perf_counter()

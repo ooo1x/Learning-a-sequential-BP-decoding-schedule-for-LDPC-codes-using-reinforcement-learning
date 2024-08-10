@@ -26,11 +26,13 @@ class SequentialEnv(gym.Env):
         self.channel_llr = np.zeros(self.H.shape[1])
         self.current_llr = np.zeros(self.H.shape[1])
         self.original_codeword = np.zeros(self.H.shape[1])
-        self.observation_space = spaces.Discrete(2 ** H.shape[0]) #state 000,001,010,100,101,110,111
+        self.observation_space = spaces.Discrete(2 ** H.shape[0])#state 000,001,010,100,101,110,111
+        self.state = self.observation_space.sample()
         self.action_space = spaces.Discrete(H.shape[0])#action 0,1,2
-        self.cn_updated = np.zeros(H.shape[0], dtype=bool) # Tracks whether each CN has been updated
+        self.cn_updated = np.zeros(H.shape[0], dtype=bool)# Tracks whether each CN has been updated
         self.step_counter = 0 #use it to control channel_llr
         self.messages = np.zeros((self.H.shape[0], self.H.shape[1]))
+        self.residuals = np.zeros(H.shape[0])
 
     def seed(self, seed=None):
         np.random.seed(seed)
@@ -52,9 +54,9 @@ class SequentialEnv(gym.Env):
     def _generate_llr(self):
         transmitted_codeword = 1 - 2 * self.original_codeword
         snr_linear = 10 ** (self.snr_db / 10)
-        Eb = 1
-        N0 = Eb / snr_linear
-        sigma = np.sqrt(N0 / 2)
+        eb = 1
+        n0 = eb / snr_linear
+        sigma = np.sqrt(n0 / 2)
         received_codeword = transmitted_codeword + sigma * np.random.randn(len(self.original_codeword))
         self.channel_llr = 2 * received_codeword / (sigma ** 2)#awgn channel
         # print("generated llr", self.channel_llr)
@@ -72,18 +74,19 @@ class SequentialEnv(gym.Env):
         if self.step_counter % 4 == 0:
             self._generate_llr()
         self.current_llr, residuals = self.bp_decoder.decode(self.current_llr, self.sequence[action])
-        reward = self._compute_reward(residuals)
-        print("REWARD", reward)
+        self.residuals[action] = np.max(residuals)
         self.cn_updated[action] = True
         done = np.all(self.cn_updated)
         info = {}
+        reward = 0
+
         if done:
-            # If all check nodes have been updated, reset for next round
+            self.state = self._get_state(self.current_llr)
+            reward = self._compute_reward(self.residuals)
             estimate = np.array([1 if x < 0 else 0 for x in self.current_llr])
             info = {'estimate': estimate}
             self.cn_updated.fill(False)  # Reset for the next set of updates
 
-        self.state = self._get_state(self.current_llr)
         truncated = False
 
         self.current_step += 1

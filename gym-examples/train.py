@@ -9,14 +9,13 @@ from ray.rllib.utils.replay_buffers.replay_buffer import StorageUnit
 from ray.rllib.policy.sample_batch import SampleBatch
 import logging
 
-logging.basicConfig(filename='rewards_average.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='ber_reward.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 def run_episode(env, agent, buffer, batch_size, render=False):
     total_reward = 0
     obs, info = env.reset()  # Unpack the tuple to get the initial state and info
     done = False
     while not done:
         action = agent.sample(obs)
-        print("action", action)
         if action is None:
             obs, info = env.reset()
             agent.reset_episode()
@@ -35,35 +34,34 @@ def run_episode(env, agent, buffer, batch_size, render=False):
             agent.learn_on_batch(batch)
 
         obs = next_obs  # Update the current state to the next one
-    return total_reward
 
 def test_episode(env, agent):
-    total_reward = 0
     obs, info = env.reset()  # Reset environment at the start of each episode
     done = False
+    num_errors = 0
+    total_bits = 0
+
+    agent.available_actions[:] = True
+
     while not done:
         action = agent.predict(obs)
-        if action is None:
-            obs, info = env.reset()
-            agent.reset_episode()
-            continue
         next_obs, reward, done, truncated, info = env.step(action)
-        total_reward += reward
         obs = next_obs
 
-    # Calculate and collect BER
-    original_codeword = env.unwrapped.original_codeword
-    estimate = info['estimate']
-    num_errors = np.sum(np.logical_xor(original_codeword, estimate))
-    total_bits = len(original_codeword)
+        if done:
+            original_codeword = env.unwrapped.original_codeword
+            estimate = info.get('estimate', [])
+            num_errors = np.sum(np.logical_xor(original_codeword, estimate))
+            total_bits = len(original_codeword)
+            agent.available_actions[:] = True
 
-    return total_reward, num_errors, total_bits
+    return reward, num_errors, total_bits
 
 def main():
     start_time = time.time()
     # Initialize the environment
     H = np.array([[1, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 1, 1], [0, 0, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 1]])
-    snr_db = 0
+    snr_db = 0.5
     env = gym.make('gym_examples/SequentialEnv-v0', H = H, snr_db = snr_db)
 
     # Initialize the agent
@@ -77,26 +75,31 @@ def main():
     batch_size = 64
 
     # Training phase
-    for episode in range(5):
+    for train_episodes in range(10000):
+        print(f"train_episode: {train_episodes}")
         run_episode(env, agent, buffer, batch_size)
+        if (train_episodes+1) % 1000 == 0:
+            # Testing phase
+            agent.set_exploration(0)  # Set exploration to 0 for testing
+            total_errors = 0
+            total_bits = 0
+            test_episodes = 0
+            total_reward = 0
+
+            while total_errors < 1000:
+                reward, errors, bits = test_episode(env, agent)
+                test_episodes += 1
+                total_errors += errors
+                total_bits += bits
+                total_reward += reward
+
+            ber = total_errors / total_bits if total_bits > 0 else 0
+            logging.info(f"Final BER at SNR {snr_db} dB: {ber}, Total reward: {total_reward}")
 
     agent.save()
 
-    # # Testing phase
-    # agent.set_exploration(0.0)  # Set exploration to 0 for testing
-    # total_errors = 0
-    # total_bits = 0
-    # while total_errors < 1000:
-    #     reward, errors, bits = test_episode(env, agent)
-    #     total_errors += errors
-    #     total_bits += bits
-    #     if total_errors >= 1000:
-    #         break  # Exit the loop once 1000 errors are accumulated
-    #
-    # ber = total_errors / total_bits if total_bits > 0 else 0
-    # print(f"Final BER at SNR {snr_db} dB: {ber}, Total bits processed: {total_bits}, Total errors: {total_errors}")
-    # total_duration = time.time() - start_time
-    # print(f"Total duration: {total_duration:.1f} s")
+    total_duration = time.time() - start_time
+    print(f"Total duration: {total_duration:.1f} s")
 
     env.close()
 

@@ -47,7 +47,6 @@ class BeliefPropagation:
                     new_message = self.compute_message(llr, indices, j)
                     residual = np.abs(new_message - messages[i, j])
                     llr[j] += new_message - messages[i, j]
-                    print(f"residual {residual}")# Update LLR by adding new and subtracting old message
                     messages[i, j] = new_message  # Store new message
 
             # print(f"LLR after iteration {iteration + 1}: {llr}")
