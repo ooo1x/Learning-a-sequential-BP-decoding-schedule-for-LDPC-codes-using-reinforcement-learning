@@ -8,6 +8,7 @@ from ray.rllib.utils.replay_buffers import ReplayBuffer
 from ray.rllib.utils.replay_buffers.replay_buffer import StorageUnit
 from ray.rllib.policy.sample_batch import SampleBatch
 import logging
+import pickle
 
 logging.basicConfig(filename='ber_reward.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 def run_episode(env, agent, buffer, batch_size, render=False):
@@ -16,18 +17,21 @@ def run_episode(env, agent, buffer, batch_size, render=False):
     done = False
     while not done:
         action = agent.sample(obs)
+        print(action)
         if action is None:
             obs, info = env.reset()
             agent.reset_episode()
             continue
         next_obs, reward, done, truncated, info = env.step(action)
         total_reward += reward# Unpack step results
-        sample = SampleBatch({
-            "obs": [obs], "actions": [action], "rewards": [reward],
-            "new_obs": [next_obs], SampleBatch.TERMINATEDS: [done],
-            SampleBatch.TRUNCATEDS: [truncated]
-        })
-        buffer.add(sample)
+        if info.get('msg') != 'Action already taken':
+            # Create a sample transition to be stored
+            sample = SampleBatch({
+                "obs": [obs], "actions": [action], "rewards": [reward],
+                "new_obs": [next_obs], SampleBatch.TERMINATEDS: [done],
+                SampleBatch.TRUNCATEDS: [truncated]
+            })
+            buffer.add(sample)
         #print_buffer(buffer)
         if len(buffer) > batch_size:
             batch = buffer.sample(batch_size)
@@ -61,7 +65,7 @@ def main():
     start_time = time.time()
     # Initialize the environment
     H = np.array([[1, 0, 1, 0, 1, 0, 1], [0, 1, 1, 0, 0, 1, 1], [0, 0, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 1]])
-    snr_db = 0.5
+    snr_db = 0
     env = gym.make('gym_examples/SequentialEnv-v0', H = H, snr_db = snr_db)
 
     # Initialize the agent
@@ -78,7 +82,7 @@ def main():
     for train_episodes in range(10000):
         print(f"train_episode: {train_episodes}")
         run_episode(env, agent, buffer, batch_size)
-        if (train_episodes+1) % 1000 == 0:
+        if (train_episodes+1) % 100 == 0:
             # Testing phase
             agent.set_exploration(0)  # Set exploration to 0 for testing
             total_errors = 0
@@ -86,15 +90,17 @@ def main():
             test_episodes = 0
             total_reward = 0
 
-            while total_errors < 1000:
+            while total_errors < 100:
                 reward, errors, bits = test_episode(env, agent)
                 test_episodes += 1
+                print(f"test_episode: {test_episodes}")
                 total_errors += errors
                 total_bits += bits
                 total_reward += reward
 
             ber = total_errors / total_bits if total_bits > 0 else 0
             logging.info(f"Final BER at SNR {snr_db} dB: {ber}, Total reward: {total_reward}")
+            agent.set_exploration(0.6)
 
     agent.save()
 

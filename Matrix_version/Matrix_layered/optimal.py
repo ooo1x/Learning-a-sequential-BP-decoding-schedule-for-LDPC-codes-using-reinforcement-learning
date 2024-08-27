@@ -54,7 +54,7 @@ def main():
     values = np.ones(len(rows))
     H = coo_matrix((values, (rows, cols)), shape=(4, 7)).toarray().astype(np.uint8)
 
-    snr = 2
+    snr = 0
     max_iter = 1
     sequence = list(itertools.permutations([0, 1, 2, 3]))
 
@@ -69,7 +69,8 @@ def main():
         print(f"BER: {ber}\n")
 
     min_ber = min(result[3] for result in results)
-    print(f"Minimum BER across all sequences: {min_ber}")
+    average_ber = sum(result[3] for result in results) / len(results)
+    print(f"Minimum BER across all sequences: {min_ber}, average BER across all sequences: {average_ber}")
 
 
 

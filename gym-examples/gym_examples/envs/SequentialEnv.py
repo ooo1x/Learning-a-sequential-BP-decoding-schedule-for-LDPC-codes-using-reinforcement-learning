@@ -78,11 +78,9 @@ class SequentialEnv(gym.Env):
         self.cn_updated[action] = True
         done = np.all(self.cn_updated)
         info = {}
-        reward = 0
+        #reward = 0
 
         if done:
-            self.state = self._get_state(self.current_llr)
-            reward = self._compute_reward(self.residuals)
             estimate = np.array([1 if x < 0 else 0 for x in self.current_llr])
             info = {'estimate': estimate}
             self.cn_updated.fill(False)  # Reset for the next set of updates
@@ -91,6 +89,8 @@ class SequentialEnv(gym.Env):
 
         self.current_step += 1
         self.step_counter += 1
+        reward = self._compute_reward(self.residuals)
+
         return self.state, reward, done, truncated, info
 
     def _compute_reward(self, residuals):
