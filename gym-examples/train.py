@@ -11,44 +11,46 @@ import logging
 import pickle
 
 logging.basicConfig(filename='ber_reward.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-def run_episode(env, agent, buffer, batch_size, render=False):
+def run_episode(env, agent, buffer, batch_size, max_time_steps, render=False):
     total_reward = 0
     obs, info = env.reset()  # Unpack the tuple to get the initial state and info
     done = False
-    while not done:
-        action = agent.sample(obs)
-        print(action)
+    time_step = 0
+    while not done and time_step < max_time_steps:
+        action = agent.sample(obs, time_step)
         if action is None:
-            obs, info = env.reset()
-            agent.reset_episode()
-            continue
+            logging.warning(f"Action is None at timestep {time_step}")
+            break
         next_obs, reward, done, truncated, info = env.step(action)
-        total_reward += reward# Unpack step results
+        total_reward += reward  # Unpack step results(just want reward)
+
         if info.get('msg') != 'Action already taken':
             # Create a sample transition to be stored
             sample = SampleBatch({
                 "obs": [obs], "actions": [action], "rewards": [reward],
-                "new_obs": [next_obs], SampleBatch.TERMINATEDS: [done],
+                "new_obs": [next_obs], "time_step": [time_step], SampleBatch.TERMINATEDS: [done],
                 SampleBatch.TRUNCATEDS: [truncated]
             })
             buffer.add(sample)
-        #print_buffer(buffer)
+
         if len(buffer) > batch_size:
             batch = buffer.sample(batch_size)
             agent.learn_on_batch(batch)
 
         obs = next_obs  # Update the current state to the next one
+        time_step += 1
 
 def test_episode(env, agent):
     obs, info = env.reset()  # Reset environment at the start of each episode
     done = False
     num_errors = 0
     total_bits = 0
+    time_step = 0
 
     agent.available_actions[:] = True
 
     while not done:
-        action = agent.predict(obs)
+        action = agent.predict(obs, time_step)
         next_obs, reward, done, truncated, info = env.step(action)
         obs = next_obs
 
@@ -58,6 +60,7 @@ def test_episode(env, agent):
             num_errors = np.sum(np.logical_xor(original_codeword, estimate))
             total_bits = len(original_codeword)
             agent.available_actions[:] = True
+        time_step += 1
 
     return reward, num_errors, total_bits
 
@@ -71,18 +74,18 @@ def main():
     # Initialize the agent
     obs_n = 2 ** H.shape[0]  # Update this based on state size calculation
     act_n = H.shape[0]  # Number of actions in environment
-    agent = QLearningAgent(obs_n=obs_n, act_n=act_n, learning_rate=1e-1, gamma=0.9, e_greed=0.6)
-    agent.restore('q_table.npy')
+    agent = QLearningAgent(obs_n=obs_n, act_n=act_n, learning_rate=1e-1, gamma=0.9, e_greed=0.6, max_time_steps=act_n)
+    #agent.restore()
 
     # Initialize replay buffer
     buffer = ReplayBuffer(capacity=10000, storage_unit=StorageUnit.TIMESTEPS)
     batch_size = 64
 
     # Training phase
-    for train_episodes in range(10000):
+    for train_episodes in range(100000):
         print(f"train_episode: {train_episodes}")
-        run_episode(env, agent, buffer, batch_size)
-        if (train_episodes+1) % 100 == 0:
+        run_episode(env, agent, buffer, batch_size, act_n) #act_n is max_time step
+        if (train_episodes+1) % 10000 == 0:
             # Testing phase
             agent.set_exploration(0)  # Set exploration to 0 for testing
             total_errors = 0

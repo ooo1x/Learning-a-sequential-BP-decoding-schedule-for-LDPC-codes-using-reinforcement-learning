@@ -1,28 +1,30 @@
 import numpy as np
 import random
+import os
 
 
 class QLearningAgent(object):
-    def __init__(self,obs_n,act_n,learning_rate,gamma,e_greed):
+    def __init__(self, obs_n, act_n, learning_rate, gamma, e_greed, max_time_steps):
         self.act_n = act_n
         self.lr = learning_rate
         self.gamma = gamma
         self.epsilon = e_greed
-        self.Q = np.zeros((obs_n, act_n))
+        self.max_time_steps = max_time_steps
+        self.Q_tables = {t: np.zeros((obs_n, act_n)) for t in range(max_time_steps)}
         self.available_actions = np.ones(act_n, dtype=bool)
 
     def set_exploration(self, e_greed):
         self.epsilon = e_greed
 
     def reset_episode(self):
-        self.available_actions.fill(True)
+        self.available_actions.fill(True)  # reset available actions evey episode
 
-    def sample(self, obs):
+    def sample(self, obs, timestep):
         state = obs
         if np.all(~self.available_actions):
             self.reset_episode()
         if np.random.uniform(0, 1) < (1.0 - self.epsilon):
-            action = self.predict(state)
+            action = self.predict(state, timestep)  #use specific timestep qtable
         else:
             available_actions = np.where(self.available_actions)[0]
             if available_actions.size > 0:
@@ -33,9 +35,8 @@ class QLearningAgent(object):
             self.available_actions[action] = False
         return action
 
-
-    def predict(self, obs):
-        Q_list = self.Q[obs, :]
+    def predict(self, obs, timestep):
+        Q_list = self.Q_tables[timestep][obs, :] #use specific qtable
         masked_Q_list = np.where(self.available_actions, Q_list, -np.inf)
         if np.all(masked_Q_list == -np.inf):
             self.available_actions[:] = True
@@ -46,16 +47,15 @@ class QLearningAgent(object):
         self.available_actions[action] = False
         return action
 
-
-    def learn(self, obs, action, reward, next_obs, done):
+    def learn(self, obs, action, reward, next_obs, done, timestep):
         state = obs
         next_state = next_obs
-        predict_Q = self.Q[state, action]
+        predict_Q = self.Q_tables[timestep][state, action]  #use specific qtable
         if done:
             target_Q = reward  # End of episode
         else:
-            target_Q = reward + self.gamma * np.max(self.Q[next_state, :])  # Bellman equation
-        self.Q[state, action] += self.lr * (target_Q - predict_Q)  # Update Q-table
+            target_Q = reward + self.gamma * np.max(self.Q_tables[timestep][next_state, :])  # Bellman equation
+        self.Q_tables[timestep][state, action] += self.lr * (target_Q - predict_Q)  # Update Q-table
 
     def learn_on_batch(self, batch):
         for i in range(len(batch["obs"])):
@@ -64,13 +64,17 @@ class QLearningAgent(object):
             reward = batch["rewards"][i]
             next_obs = batch["new_obs"][i]
             done = batch["dones"][i]
-            self.learn(obs, action, reward, next_obs, done)
+            time_step = batch["time_step"][i]
+            self.learn(obs, action, reward, next_obs, done, time_step)
 
     def save(self):
-        npy_file = './q_table.npy'
-        np.save(npy_file, self.Q)
-        print(npy_file + ' saved.')
+        for t, q_table in self.Q_tables.items():
+            np.save(f'./q_table_step_{t}.npy', q_table)
+            print(f'./q_table_step_{t}.npy saved.')
 
-    def restore(self, npy_file='./q_table.npy'):
-        self.Q = np.load(npy_file)
-        print(npy_file + ' loaded.')
+    def restore(self):
+        for t in range(self.max_time_steps):
+            file_path = f'./q_table_step_{t}.npy'
+            if os.path.exists(file_path):
+                self.Q_tables[t] = np.load(file_path)
+                print(f'{file_path} loaded.')

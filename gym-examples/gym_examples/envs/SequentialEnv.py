@@ -74,7 +74,7 @@ class SequentialEnv(gym.Env):
         if self.step_counter % 4 == 0:
             self._generate_llr()
         self.current_llr, residuals = self.bp_decoder.decode(self.current_llr, self.sequence[action])
-        self.residuals[action] = np.max(residuals)
+        #self.residuals[action] = np.max(residuals)
         self.cn_updated[action] = True
         done = np.all(self.cn_updated)
         info = {}
@@ -89,12 +89,13 @@ class SequentialEnv(gym.Env):
 
         self.current_step += 1
         self.step_counter += 1
-        reward = self._compute_reward(self.residuals)
+        reward = self._compute_reward(residuals)
 
         return self.state, reward, done, truncated, info
 
     def _compute_reward(self, residuals):
-        max_residual = np.max(residuals)
+        flat_residuals = np.hstack(residuals)
+        max_residual = np.max(flat_residuals)
         return max_residual
 #different reward function
 

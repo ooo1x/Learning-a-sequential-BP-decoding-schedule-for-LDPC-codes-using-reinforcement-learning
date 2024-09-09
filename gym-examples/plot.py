@@ -3,20 +3,41 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import seaborn as sns
 
-def plot_q_table(q_table_filepath):
-    # Load the Q-table from a file
-    q_table = np.load(q_table_filepath)
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(q_table, annot=True, fmt=".8f",cmap="coolwarm")
-    plt.title("Q-table Heatmap")
-    plt.xlabel("Actions")
-    plt.ylabel("States")
-    plt.show()
+# def plot_q_table(q_table_filepath):
+#     # Load the Q-table from a file
+#     q_table = np.load(q_table_filepath)
+#     plt.figure(figsize=(10, 8))
+#     sns.heatmap(q_table, annot=True, fmt=".8f",cmap="coolwarm")
+#     plt.title("Q-table Heatmap")
+#     plt.xlabel("Actions")
+#     plt.ylabel("States")
+#     plt.show()
+#
+# plot_q_table("q_table.npy")
+# data = np.load('q_table.npy')
+#
+# print(data)
 
-plot_q_table("q_table.npy")
-data = np.load('q_table.npy')
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-print(data)
+def plot_q_tables(base_filepath, num_time_steps):
+    for t in range(num_time_steps):
+        q_table_filepath = f"{base_filepath}_step_{t}.npy"
+        q_table = np.load(q_table_filepath)
+
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(q_table, annot=True, fmt=".8f", cmap="coolwarm")
+        plt.title(f"Q-table Heatmap at Time Step {t}")
+        plt.xlabel("Actions")
+        plt.ylabel("States")
+        plt.show()
+
+
+# Example usage
+plot_q_tables("q_table", 4)
+
 
 # def read_ber_data(filename):
 #     snr = []
@@ -59,30 +80,30 @@ print(data)
 #
 # plt.show()
 
-import matplotlib.pyplot as plt
-
-# 数据点
-episodes = [5000,11000,18000,26000,35000]
-rewards = [11013.800287617438,12448.434221993506, 12433.098139925267, 13373.708733930791,18657.5765365411]
-ber_values = [0.017879270667374755, 0.016118836915297093, 0.015615337043908472, 0.014723032069970846, 0.010695753468177485]
-
-fig, ax1 = plt.subplots(figsize=(12, 6))
-
-color = 'tab:blue'
-ax1.set_xlabel('Episodes')
-ax1.set_ylabel('Reward', color=color)
-ax1.plot(episodes, rewards, color=color, marker='o', label='Average Reward')
-ax1.tick_params(axis='y', labelcolor=color)
-
-ax2 = ax1.twinx()
-color = 'tab:red'
-ax2.set_ylabel('BER', color=color)
-ax2.plot(episodes, ber_values, color=color, marker='o', label='BER')
-ax2.tick_params(axis='y', labelcolor=color)
-
-ax1.legend(loc='upper left')
-ax2.legend(loc='upper right')
-
-plt.title('Reward and BER vs. Episodes')
-plt.show()
+# import matplotlib.pyplot as plt
+#
+# # 数据点
+# episodes = [5000,11000,18000,26000,35000]
+# rewards = [11013.800287617438,12448.434221993506, 12433.098139925267, 13373.708733930791,18657.5765365411]
+# ber_values = [0.017879270667374755, 0.016118836915297093, 0.015615337043908472, 0.014723032069970846, 0.010695753468177485]
+#
+# fig, ax1 = plt.subplots(figsize=(12, 6))
+#
+# color = 'tab:blue'
+# ax1.set_xlabel('Episodes')
+# ax1.set_ylabel('Reward', color=color)
+# ax1.plot(episodes, rewards, color=color, marker='o', label='Average Reward')
+# ax1.tick_params(axis='y', labelcolor=color)
+#
+# ax2 = ax1.twinx()
+# color = 'tab:red'
+# ax2.set_ylabel('BER', color=color)
+# ax2.plot(episodes, ber_values, color=color, marker='o', label='BER')
+# ax2.tick_params(axis='y', labelcolor=color)
+#
+# ax1.legend(loc='upper left')
+# ax2.legend(loc='upper right')
+#
+# plt.title('Reward and BER vs. Episodes')
+# plt.show()
 
